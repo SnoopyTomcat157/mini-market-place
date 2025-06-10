@@ -1,0 +1,15 @@
+# File di configurazione locale con dati sensibili
+/config/config.php
+
+# File di log degli errori
+/error.log
+
+# Cartelle delle dipendenze (se userai strumenti come Composer o npm)
+/vendor/
+/node_modules/
+
+# File di sistema e dell'IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
