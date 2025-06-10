@@ -1,0 +1,192 @@
+:root {
+    --colore-primario: #007bff;
+    --colore-secondario: #343a40; 
+    --colore-sfondo: #f8f9fa; 
+    --colore-superficie: #ffffff; 
+    --colore-successo: #28a745; 
+    --colore-errore: #dc3545;
+    --bordo-radius: 8px; 
+    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Reset di base per rimuovere gli stili di default del browser */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-family: 'Arial', sans-serif; 
+    line-height: 1.6;
+    background-color: var(--colore-sfondo);
+    color: var(--colore-secondario);
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+a {
+    color: var(--colore-primario);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+
+
+.main-header {
+    background-color: var(--colore-superficie);
+    box-shadow: var(--box-shadow);
+    padding: 1rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative; 
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--colore-secondario);
+    text-decoration: none;
+}
+
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+
+.main-nav .dropdown {
+    position: relative; 
+}
+
+
+.main-nav .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--colore-superficie);
+    box-shadow: var(--box-shadow);
+    list-style: none;
+    padding: 10px 0;
+    margin-top: 5px;
+    border-radius: var(--bordo-radius);
+    min-width: 200px;
+    z-index: 1000;
+}
+
+
+.main-nav .dropdown-menu a {
+    display: block;
+    padding: 10px 20px;
+    white-space: nowrap;
+    font-weight: normal;
+}
+
+.main-nav .dropdown-menu a:hover {
+    background-color: #e9ecef;
+}
+
+
+.main-nav .dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* Pulsante Hamburger nascosto su desktop */
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1001; 
+}
+
+.hamburger-icon {
+    width: 25px;
+    height: 25px;
+}
+
+.hamburger-icon rect {
+    fill: var(--colore-secondario);
+}
+
+
+
+@media (max-width: 768px) {
+    
+    .mobile-menu-toggle {
+        display: block;
+    }
+
+    .main-nav {
+        display: none; 
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: var(--colore-superficie);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+   
+    .main-nav.is-active {
+        display: block;
+    }
+
+    
+    .main-nav ul {
+        flex-direction: column;
+        gap: 0;
+        padding: 10px 0;
+    }
+
+    .main-nav li {
+        width: 100%;
+    }
+
+    .main-nav a {
+        display: block;
+        padding: 15px 20px;
+        text-align: center;
+    }
+    
+   
+    .main-nav .dropdown:hover .dropdown-menu {
+        display: none; 
+    }
+    
+    .main-nav .dropdown-menu {
+        position: static; 
+        box-shadow: none;
+        background-color: #f1f1f1;
+        border-radius: 0;
+        min-width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .main-nav .dropdown-menu a {
+        padding-left: 40px; 
+        text-align: center;
+        font-weight: normal;
+        background-color: #f8f8f8;
+    }
+}

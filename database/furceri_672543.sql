@@ -1,4 +1,4 @@
--- Creazione del database
+-- Creazione del database (opzionale, puoi crearlo manualmente da phpMyAdmin)
 CREATE DATABASE IF NOT EXISTS furceri_672543 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE furceri_672543;
 
@@ -72,4 +72,12 @@ CREATE TABLE recensioni (
 
 -- Tabella per i carrelli persistenti degli utenti loggati
 CREATE TABLE carrelli_utente (
-    id_c
+    id_carrello INT AUTO_INCREMENT PRIMARY KEY,
+    id_utente INT NOT NULL,
+    id_prodotto INT NOT NULL,
+    quantita INT NOT NULL DEFAULT 1,
+    data_aggiunta TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_utente) REFERENCES utenti(id_utente) ON DELETE CASCADE,
+    FOREIGN KEY (id_prodotto) REFERENCES prodotti(id_prodotto) ON DELETE CASCADE,
+    UNIQUE KEY utente_prodotto_unico (id_utente, id_prodotto)
+);

@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ .'/../../config.php';
+require_once __DIR__ .'/../../config/config.php';
 
 
 //classe per gestire le connessioni al database
@@ -23,7 +23,7 @@ class Database {
         //gestione ottimale egli errori
         $options = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,  //modalità di fetch
             PDO::ATTR_EMULATE_PREPARES => false,
         ];
 
@@ -36,3 +36,5 @@ class Database {
         return $this->conn;
     }
 }
+
+?>
