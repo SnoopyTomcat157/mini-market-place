@@ -28,7 +28,7 @@ require_once 'src/templates/header.php';
             <input type="email" id="email" name="email" required>
         </div>
 
-       <div class="form-group">
+        <div class="form-group">
             <label for="password">Password</label>
             <div class="password-wrapper">
                 <input type="password" id="password" name="password" required>
@@ -55,8 +55,11 @@ require_once 'src/templates/header.php';
         </div>
 
         <button type="submit" class="button-primary">
-            <span class="button-text">Registrati</span>
-            <div class="loader"></div>
+            <span class="button-text-default">Registrati</span>
+            <div class="button-loading-content">
+                <div class="loader"></div>
+                <span class="button-text-loading"></span>
+            </div>
         </button>
     </form>
 
@@ -66,7 +69,6 @@ require_once 'src/templates/header.php';
         <p>Hai già un account? <a href="login.php">Accedi qui</a>.</p>
     </div>
 </div>
-
 
 <script src="js/auth.js"></script>
 

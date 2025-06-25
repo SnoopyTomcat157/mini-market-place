@@ -22,6 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const feedback = document.getElementById('feedbackMessage');
             const submitButton = registerForm.querySelector('button[type="submit"]');
+            const loadingTextSpan = submitButton.querySelector('.button-text-loading');
+
             //sanifico gli input
             const username = document.getElementById('username').value.trim();
             const email = document.getElementById('email').value.trim();
@@ -65,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             submitButton.disabled = true;
             feedback.className = 'feedback-message';
+            submitButton.classList.add('is-loading');
 
             const startTime = Date.now(); //memorizzo il momento di inizio animazione
 
@@ -107,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // prima di fermare l'animazione
                  setTimeout(() => {
                     clearInterval(interval);
+                    submitButton.classList.remove('is-loading');
                     submitButton.disabled = false; 
                     
                     // Ora mostra il messaggio finale
