@@ -1,3 +1,27 @@
+<?php
+if (!isset($pdo)) {
+    // Inizializza la connessione al database se non è già stata creata
+    require_once __DIR__ . '/../../src/core/Database.php';
+    try {
+        $database = new Database();
+        $pdo = $database->getConnection();
+    } catch (Exception $e) {
+        $pdo = null;
+        error_log('Errore connessione DB nell\'header: ' . $e->getMessage());
+    }
+}
+//logiva prodotti cercati
+$categories = [];
+if ($pdo) {
+    try {
+        $sql_categories = "SELECT id_categoria, nome_categoria FROM categorie ORDER BY nome_categoria ASC";
+        $stmt_categories = $pdo->query($sql_categories);
+        $categories = $stmt_categories->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+        error_log('Errore recupero categorie per header: ' . $e->getMessage());
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -11,7 +35,24 @@
 <body>
     
 <header class="main-header">
-    <a href="index.php" class="logo">MiniMarketplace</a>
+    <a href="index.php" class="logo"><img src="images/SVG/logo.svg" alt="MiniMarketplace"></a>
+
+    <div class="search-container-header">
+        <form id="searchForm">
+            <div class="search-bar">
+                <select name="category" id="categorySelect">
+                    <option value="">Tutte le categorie</option>
+                    <?php foreach ($categories as $category): ?>
+                        <option value="<?php echo htmlspecialchars($category['id_categoria']); ?>">
+                            <?php echo htmlspecialchars($category['nome_categoria']); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+                <input type="text" id="searchInput" name="query" placeholder="Cosa stai cercando?">
+                <button type="submit" class="search-button">Cerca</button>
+            </div>
+        </form>
+    </div>
     
     <!-- menu mobile -->
     <button id="mobile-menu-toggle" class="mobile-menu-toggle">

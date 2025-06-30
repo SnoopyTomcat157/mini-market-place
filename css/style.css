@@ -52,17 +52,30 @@ a:hover {
     background-color: var(--colore-superficie);
     box-shadow: var(--box-shadow);
     padding: 1rem 5%;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    justify-content:space-between;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
+    gap: 30px;
     position: relative; 
 }
 
-.logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--colore-secondario);
-    text-decoration: none;
+.main-header .logo {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background-color: #dbf8fc; 
+    padding: 0.5rem; 
+    border-radius: var(--bordo-radius);
+}
+
+.main-header .logo img{
+    height: 140px; 
+    width: 750px; 
+    object-fit: cover; 
+    object-position: center; 
+    transform: scale(1.2); 
+    vertical-align: middle;
 }
 
 .main-nav ul {
@@ -189,4 +202,58 @@ a:hover {
         font-weight: normal;
         background-color: #f8f8f8;
     }
+}
+
+.search-container-header {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto; /* Centra la barra di ricerca nello spazio disponibile */
+}
+
+.search-bar {
+    display: flex;
+    border-radius: var(--bordo-radius);
+    overflow: hidden;
+    border: 1px solid #ddd;
+}
+
+.search-bar select,
+.search-bar input {
+    border: none;
+    padding: 12px 15px; /* Padding leggermente ridotto per l'header */
+    font-size: 0.95rem;
+}
+
+.search-bar select:focus,
+.search-bar input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); /* Aggiunge un anello di focus */
+}
+
+.search-bar select {
+    background-color: #f8f9fa;
+    color: var(--colore-secondario);
+    border-right: 1px solid #ddd;
+    cursor: pointer;
+    flex-shrink: 0; /* Impedisce al select di restringersi */
+}
+
+.search-bar input[type="text"] {
+    flex-grow: 1; /* Fa in modo che l'input occupi tutto lo spazio rimanente */
+}
+
+.search-bar .search-button {
+    background-color: var(--colore-primario);
+    color: white;
+    border: none;
+    padding: 0 25px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.search-bar .search-button:hover {
+    background-color: #0056b3;
 }
