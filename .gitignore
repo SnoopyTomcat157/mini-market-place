@@ -15,4 +15,4 @@ Thumbs.db
 .idea/
 
 #file di hash delle password
-/hash_ps_generate.php
+hash_ps_generate.php
