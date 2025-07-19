@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const registerForm = document.getElementById('registerForm');
+    const loginForm = document.getElementById('loginForm');
 
     const togglePasswordButtons = document.querySelectorAll('.toggle-password');
     togglePasswordButtons.forEach(button => {
@@ -123,6 +124,63 @@ document.addEventListener('DOMContentLoaded', () => {
                 }, tempoRimanente);
             })
         })
+    }
+
+    if (loginForm) {
+        loginForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const feedbackDiv = document.getElementById('feedbackMessage');
+            const submitButton = loginForm.querySelector('button[type="submit"]');
+            const loadingTextSpan = submitButton.querySelector('.button-text-loading');
+
+            // Avvio animazione
+            submitButton.disabled = true;
+            submitButton.classList.add('is-loading');
+            feedbackDiv.textContent = '';
+
+            let count = 0;
+            const interval = setInterval(() => {
+                count = (count + 1) % 4;
+                const dots = '.'.repeat(count);
+                if (loadingTextSpan) loadingTextSpan.textContent = `Accesso${dots}`;
+            }, 400);
+
+            let fetchResult = null;
+            const startTime = Date.now();
+            const formData = new FormData(loginForm);
+            formData.append('action', 'login');
+
+            fetch('api/auth.php', { method: 'POST', body: formData })
+                .then(response => response.json().then(data => ({ ok: response.ok, data })))
+                .then(({ ok, data }) => {
+                    if (!ok) throw new Error(data.message || 'Errore.');
+                    fetchResult = { success: true, message: data.message };
+                })
+                .catch(error => {
+                    fetchResult = { success: false, message: error.message };
+                })
+                .finally(() => {
+                    const tempoPassato = Date.now() - startTime;
+                    const durata = 1000;
+                    const tempoRimanente = Math.max(0, durata - tempoPassato);
+
+                    setTimeout(() => {
+                        clearInterval(interval);
+                        submitButton.classList.remove('is-loading');
+
+                        if (fetchResult && fetchResult.success) {
+                            showSuccess(fetchResult.message);
+                            setTimeout(() => { window.location.href = 'user_dashboard.php'; }, 1500);
+                        } else if (fetchResult) {
+                            showError(fetchResult.message);
+                            submitButton.disabled = false;
+                        } else {
+                            submitButton.disabled = false;
+                        }
+                    }, tempoRimanente);
+                });
+        });
     }
 
     function showError(message){
