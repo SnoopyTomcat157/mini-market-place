@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function showError(message){
         const feedback = document.getElementById('feedbackMessage');
         feedback.textContent = message;
-        feedback.className = 'feedback-message-error';
+        feedback.className = 'feedback-message error';
 
     }
 
