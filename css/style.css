@@ -60,6 +60,22 @@ a:hover {
     position: relative; 
 }
 
+.main-header.header-simple {
+    grid-template-columns: 1fr; 
+    justify-items: center;
+    padding: 2rem 0;
+}
+
+.main-header.header-simple .logo {
+    display: flex;
+    align-items: center;
+    justify-self: center; /* Centra il logo nella griglia */
+    overflow: hidden;
+    background-color: #dbf8fc; 
+    padding: 0.5rem; 
+    border-radius: var(--bordo-radius);
+}
+
 .main-header .logo {
     display: flex;
     align-items: center;

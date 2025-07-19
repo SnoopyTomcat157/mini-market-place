@@ -10,7 +10,7 @@ if (!isset($pdo)) {
         error_log('Errore connessione DB nell\'header: ' . $e->getMessage());
     }
 }
-//logiva prodotti cercati
+//logica prodotti cercati
 $categories = [];
 if ($pdo) {
     try {
@@ -21,6 +21,10 @@ if ($pdo) {
         error_log('Errore recupero categorie per header: ' . $e->getMessage());
     }
 }
+
+$currentPage = basename($_SERVER['SCRIPT_NAME']);
+$pages = ['login.php', 'register.php'];
+$isPages = in_array($currentPage, $pages);
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -33,10 +37,13 @@ if ($pdo) {
 
 </head>
 <body>
-    
-<header class="main-header">
-    <a href="index.php" class="logo"><img src="images/SVG/logo.svg" alt="MiniMarketplace"></a>
 
+<header class="main-header <?php if ($isPages) echo 'header-simple'; ?>">
+    <a href="index.php" class="logo"><img src="images/SVG/logo.svg" alt="MiniMarketplace"></a>
+    <?php
+        // Mostra la barra di ricerca e la navbar solo se non siamo nelle pagine di login o registrazione
+        if(!$isPages) :
+    ?>
     <div class="search-container-header">
         <form id="searchForm">
             <div class="search-bar">
@@ -105,6 +112,9 @@ if ($pdo) {
             </li>
         </ul>
     </nav>
+    <?php 
+        endif;
+    ?>
 </header>
 
 <main class="container">
