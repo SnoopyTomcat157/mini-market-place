@@ -84,7 +84,7 @@
             if (isset($_POST['categoria_id'])) { $fields[] = 'id_categoria = ?'; $params[] = (int)$_POST['categoria_id']; }
             if (isset($_POST['quantita'])) { $fields[] = 'quantita_disponibile = ?'; $params[] = (int)$_POST['quantita']; }
             
-            // Gestione nuova immagine
+            //gestione nuova immagine
             if (isset($_FILES['immagine']) && $_FILES['immagine']['error'] == 0) {
                 // NOTA: Qui andrà la logica di ottimizzazione e di eliminazione della vecchia immagine.
                 $nome_file_immagine = 'placeholder_update_'. time() . '.jpg';
@@ -100,7 +100,7 @@
         $sql = "UPDATE prodotti SET " . implode(', ', $fields) . " WHERE id_prodotto = ?";
         $params[] = $productId;
 
-        // Aggiungi il controllo di proprietà per i venditori
+        //controllo di proprietà per i venditori
         if ($_SESSION['user_role'] === 'venditore') {
             $sql .= " AND id_utente_venditore = ?";
             $params[] = $_SESSION['user_id'];
@@ -110,7 +110,7 @@
             $stmt = $pdo->prepare($sql);
             $stmt->execute($params);
             
-            // Controlla se la riga è stata effettivamente modificata
+            //controlla se la riga è stata effettivamente modificata
             if ($stmt->rowCount() > 0) {
                 echo json_encode(['success' => true, 'message' => 'Prodotto aggiornato con successo!']);
             } else {
@@ -124,7 +124,7 @@
         break;
 
         case 'delete':
-            // --- LOGICA DI ELIMINAZIONE PRODOTTO ---
+            // eliminazione prodotto
             $productId = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
             if ($productId <= 0) {
                 http_response_code(400);
@@ -133,17 +133,16 @@
             }
 
             try {
-                // --- MODIFICA: Recupera il nome del file prima di eliminare ---
+            
                 $image_to_delete = null;
                 $stmt_select = $pdo->prepare("SELECT nome_file_immagine FROM prodotti WHERE id_prodotto = ?");
                 $stmt_select->execute([$productId]);
                 $image_to_delete = $stmt_select->fetchColumn();
 
-                // Costruisci la query di eliminazione
                 $sql = "DELETE FROM prodotti WHERE id_prodotto = ?";
                 $params = [$productId];
 
-                // Aggiungi il controllo di proprietà per i venditori
+                // controllo di proprietà per i venditori
                 if ($_SESSION['user_role'] === 'venditore') {
                     $sql .= " AND id_utente_venditore = ?";
                     $params[] = $_SESSION['user_id'];
@@ -153,7 +152,7 @@
                 $stmt->execute($params);
 
                 if ($stmt->rowCount() > 0) {
-                    // --- MODIFICA: Se l'eliminazione dal DB ha successo, elimina il file ---
+            
                     if ($image_to_delete) {
                         $filePath = '../uploads/products/' . $image_to_delete;
                         if (file_exists($filePath)) {
