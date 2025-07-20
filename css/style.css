@@ -273,3 +273,10 @@ a:hover {
 .search-bar .search-button:hover {
     background-color: #0056b3;
 }
+
+.dashboard-product-img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+}
