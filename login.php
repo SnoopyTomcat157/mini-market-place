@@ -43,7 +43,7 @@
             </div>
         </button>
         </form>
-         <div id="feedbackMessage" class="feedback-message" style="color: red;"></div>
+         <div id="feedbackMessage" class="feedback-message"></div>
 
     <div class="form-footer">
         <p>Non hai ancora un account? <a href="register.php">Registrati qui</a>.</p>
