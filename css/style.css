@@ -274,9 +274,103 @@ a:hover {
     background-color: #0056b3;
 }
 
+.dashboard-container {
+    padding: 20px;
+    background-color: var(--colore-superficie);
+    border-radius: var(--bordo-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.dashboard-header h1 {
+    font-size: 2rem;
+}
+
+/* -------------------------
+ * TABELLA DEI PRODOTTI
+ * ------------------------- */
+
+.dashboard-content h2 {
+    margin-bottom: 20px;
+}
+
+.product-table {
+    width: 100%;
+    border-collapse: collapse; /* Rimuove lo spazio tra le celle */
+}
+
+.product-table th,
+.product-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.product-table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.product-table tbody tr:hover {
+    background-color: #f1f1f1; /* Effetto hover sulle righe */
+}
+
+/* Stile per l'immagine del prodotto nella dashboard */
 .dashboard-product-img {
     width: 60px;
     height: 60px;
     object-fit: cover;
     border-radius: 4px;
+    vertical-align: middle;
+}
+
+/* -------------------------
+ * PULSANTI DI AZIONE (MODIFICA / ELIMINA)
+ * ------------------------- */
+
+.product-table .actions {
+    display: flex;
+    gap: 10px; /* Spazio tra i pulsanti */
+}
+
+.action-btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: var(--bordo-radius);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    text-decoration: none;
+}
+
+/* Stile per il pulsante "Modifica" */
+.btn-edit {
+    background-color: var(--colore-primario);
+}
+
+.btn-edit:hover {
+    background-color: #0056b3; /* Blu più scuro */
+}
+
+/* Stile per il pulsante "Elimina" */
+.btn-delete {
+    background-color: var(--colore-errore);
+}
+
+.btn-delete:hover {
+    background-color: #c82333; /* Rosso più scuro */
 }
