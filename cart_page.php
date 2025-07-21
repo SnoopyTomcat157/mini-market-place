@@ -75,19 +75,19 @@ require_once 'src/templates/header.php';
                 <tbody>
                     <?php foreach($cartItems as $item): ?>
                         <tr>
-                            <td>
+                            <td data-label="Immagine">
                                 <?php
                                     $image_name = isset($item['image']) && !empty($item['image']) ? $item['image'] : 'default_image.png';
                                 ?>
                                 <img src="uploads/products/<?php echo htmlspecialchars($image_name); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" class="cart-product-img">
                             </td>
-                            <td><?php echo htmlspecialchars(($item['name'])); ?></td>
-                            <td><?php echo number_format($item['price'],2, ',', '.'); ?></td>
-                            <td>
+                            <td data-label="Nome"><?php echo htmlspecialchars(($item['name'])); ?></td>
+                            <td data-label="Prezzo"><?php echo number_format($item['price'],2, ',', '.'); ?></td>
+                            <td data-label="Quantità">
                                 <input type="number" value="<?php echo $item['quantity']; ?>" min="1" class="quantity-input" data-product-id="<?php echo $item['id']; ?>">
                             </td>
-                            <td><?php echo number_format($item['total'], 2, ',', '.'); ?></td>
-                            <td>
+                            <td data-label="Subtotale"><?php echo number_format($item['total'], 2, ',', '.'); ?></td>
+                            <td data-label="Rimuovi">
                                 <button class="remove-from-cart" data-product-id="<?php echo $item['id']; ?>">X</button>
                             </td>
                         </tr>

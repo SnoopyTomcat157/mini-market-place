@@ -374,3 +374,177 @@ a:hover {
 .btn-delete:hover {
     background-color: #c82333; /* Rosso più scuro */
 }
+
+
+.cart-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+.cart-container h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* -------------------------
+ * MESSAGGIO CARRELLO VUOTO
+ * ------------------------- */
+
+.cart-empty {
+    text-align: center;
+    padding: 50px;
+    background-color: var(--colore-superficie);
+    border-radius: var(--bordo-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.cart-empty p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+/* -------------------------
+ * LAYOUT CARRELLO PIENO
+ * ------------------------- */
+
+.cart-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* 2/3 per la tabella, 1/3 per il riepilogo */
+    gap: 30px;
+    align-items: flex-start;
+}
+
+/* -------------------------
+ * TABELLA DEI PRODOTTI
+ * ------------------------- */
+
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--colore-superficie);
+    border-radius: var(--bordo-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden; /* Per applicare il border-radius anche agli angoli della tabella */
+}
+
+.cart-table th,
+.cart-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.cart-table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.cart-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.cart-product-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.cart-table input[type="number"] {
+    width: 60px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.remove-from-cart {
+    background-color: var(--colore-errore);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.remove-from-cart:hover {
+    background-color: #c82333; /* Rosso più scuro */
+}
+
+/* -------------------------
+ * RIEPILOGO ORDINE
+ * ------------------------- */
+
+.cart-summary {
+    background-color: var(--colore-superficie);
+    padding: 20px;
+    border-radius: var(--bordo-radius);
+    box-shadow: var(--box-shadow);
+    position: sticky; /* Rimane visibile mentre si scorre la tabella */
+    top: 20px;
+}
+
+.cart-summary h2 {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.checkout-btn {
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 992px) {
+    .cart-content {
+        grid-template-columns: 1fr; /* Su schermi medi, una sola colonna */
+    }
+}
+
+@media (max-width: 576px) {
+    .cart-table thead {
+        display: none; /* Nasconde l'intestazione su mobile */
+    }
+
+    .cart-table, .cart-table tbody, .cart-table tr, .cart-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .cart-table tr {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: var(--bordo-radius);
+    }
+
+    .cart-table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+        border-bottom: 1px solid #eee;
+    }
+
+    .cart-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 15px;
+        width: 45%;
+        padding-right: 10px;
+        text-align: left;
+        font-weight: bold;
+    }
+}
