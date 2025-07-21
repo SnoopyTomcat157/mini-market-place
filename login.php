@@ -12,7 +12,7 @@
 
     ?>
 
-    <div class='form-container'>
+    <section class='form-container'>
         <h1>Accedi al tuo Account</h1>
         <p>Bentornato! Inserisci le tue credenziali per continuare.</p>
 
@@ -45,9 +45,11 @@
         </form>
          <div id="feedbackMessage" class="feedback-message"></div>
 
-    <div class="form-footer">
-        <p>Non hai ancora un account? <a href="register.php">Registrati qui</a>.</p>
-    </div>
+        <div class="form-footer">
+            <p>Non hai ancora un account? <a href="register.php">Registrati qui</a>.</p>
+        </div>
+
+    </section>
 
     <script src="js/auth.js"></script>
 

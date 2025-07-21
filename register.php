@@ -13,7 +13,7 @@ $pageTitle = "Registrati - MiniMarketplace";
 require_once 'src/templates/header.php';
 ?>
 
-<div class="form-container">
+<section class="form-container">
     <h1>Crea il tuo Account</h1>
     <p>Registrati per iniziare a vendere e acquistare.</p>
 
@@ -68,7 +68,7 @@ require_once 'src/templates/header.php';
     <div class="form-footer">
         <p>Hai già un account? <a href="login.php">Accedi qui</a>.</p>
     </div>
-</div>
+</section>
 
 <script src="js/auth.js"></script>
 
