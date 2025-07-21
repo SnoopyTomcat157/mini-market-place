@@ -55,7 +55,7 @@
 
         <div class="product-detail-info">
             <h1><?php echo htmlspecialchars($product['nome_prodotto']); ?></h1>
-            <p class="price"><?php echo number_format($product['prezzo'], 2, '.', '.'); ?>€</p>
+            <p class="price"><?php echo number_format($product['prezzo'], 2, ',', '.'); ?>€</p>
 
             <div class="product-meta">
                 <p><strong>Venduto da:</strong> <?php echo htmlspecialchars($product['nome_venditore']); ?></p>
