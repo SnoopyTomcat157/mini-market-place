@@ -32,7 +32,7 @@
             exit();
         }
     } catch (Exception $e) {
-        error_log(e->getMessage());
+        error_log($e->getMessage());
         $errorMessage = "Si è verificato un errore nel caricare i dettagli del prodotto. Riprova più tardi.";
     }
     
