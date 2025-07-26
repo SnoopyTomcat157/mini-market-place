@@ -120,7 +120,33 @@ if ($action === 'register') {
         $_SESSION['user_role'] = $user['ruolo'];
         echo json_encode(['success' => true, 'message' => 'Login avvenuto con successo.']);
 
-        
+        //unione del carrello con la sessione
+        if(isset($_SESSION['cart']) && !empty($_SESSION['cart'])){
+            try {
+                $db = new Database();
+                $pdo = $db->getConnection();
+
+                foreach($_SESSION['cart'] as $productId => $quantity){
+                    //se il prodotto non è nel carrello faccio una insert,
+                    //se è già presente faccio un update
+
+                    $sql = "INSERT INTO carrelli_utente (id_utente, id_prodotto, quantita)
+                            VALUES (:id_utente, :id_prodotto, :quantita)
+                            ON DUPLICATE KEY UPDATE quantita = quantita + VALUES(quantita)";
+                    
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute([
+                        ':id_utente' => $_SESSION['user_id'],
+                        ':id_prodotto' => $productId,
+                        ':quantita' => $quantity
+                    ]);
+                }
+                //svuoto il carrello della sessione
+                unset($_SESSION['cart']);
+            } catch ( Exception $e) {
+                error_log('Errore durante unione carrello per utente:' .$_SESSION['user_id'] . ': ' . $e->getMessage());
+            }
+        }
 
     } catch (PDOException $e) {
         http_response_code(500);
