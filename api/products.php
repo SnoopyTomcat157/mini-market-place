@@ -2,6 +2,7 @@
 
     require_once '../config/config.php';
     require_once '../src/core/Database.php';
+    require_once '../src/core/functions.php';
 
     header('Content-Type: application/json');
 
@@ -28,6 +29,8 @@
 
     $action = isset(($_POST['action'])) ? $_POST['action'] : '';
     $database = new Database;
+
+    $uploadDir = '../uploads/products/';
     
     $pdo = $database->getConnection();
     switch($action){
@@ -46,7 +49,16 @@
             }
             $nome_file_immagine = null;
             if(isset($_FILES['immagine']) && $_FILES['immagine']['error'] == 0) {
-                $nome_file_immagine = 'placeholder_'. time(). 'jpg';
+               $tempFilePath = $_FILES['immagine']['tmp_name'];
+                $uniqueFilename = uniqid('prod_', true) . '.jpg'; // Salviamo sempre come JPG ottimizzato
+                $destinationPath = $uploadDir . $uniqueFilename;
+
+            if (optimizeImage($tempFilePath, $destinationPath)) {
+                $nome_file_immagine = $uniqueFilename;
+            } else {
+                // Gestisci l'errore se l'ottimizzazione fallisce
+                error_log("Fallimento ottimizzazione immagine per il prodotto: " . $_POST['nome_prodotto']);
+            }
 
             }
 
@@ -86,10 +98,26 @@
             
             //gestione nuova immagine
             if (isset($_FILES['immagine']) && $_FILES['immagine']['error'] == 0) {
-                // NOTA: Qui andrà la logica di ottimizzazione e di eliminazione della vecchia immagine.
-                $nome_file_immagine = 'placeholder_update_'. time() . '.jpg';
-                $fields[] = 'nome_file_immagine = ?'; 
-                $params[] = $nome_file_immagine;
+                //recupero vecchia immagine
+                $stmt_old_img = $pdo->prepare("SELECT nome_file_immagine FROM prodotti WHERE id_prodotto = ?");
+                $stmt_old_img->execute([$productId]);
+                $oldImage = $stmt_old_img->fetchColumn();
+
+                //ottimizzo e salvo nuova immagine
+                $tempFilePath = $_FILES['immagine']['tmp_name'];
+                $uniqueFilename = uniqid('prod_', true) . '.jpg';
+                $destinationPath = $uploadDir . $uniqueFilename;
+
+                if (optimizeImage($tempFilePath, $destinationPath)) {
+                    // Se l'upload ha successo, aggiungi il campo all'aggiornamento
+                    $fields[] = 'nome_file_immagine = ?'; 
+                    $params[] = $uniqueFilename;
+
+                    // 3. Elimina la vecchia immagine, se esisteva
+                    if ($oldImage && file_exists($uploadDir . $oldImage)) {
+                        unlink($uploadDir . $oldImage);
+                    }
+                }
             }
 
         if (empty($fields)) {
