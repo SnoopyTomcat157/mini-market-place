@@ -1,0 +1,57 @@
+body {
+    
+    background: linear-gradient(135deg, #89CFF0 0%, #B2FFFF 100%);
+    background-attachment: fixed; /* Mantiene lo sfondo fisso durante lo scorrimento */
+}
+
+
+/*STILE VETRO PER I CONTENITORI*/
+
+.shipping-form, .order-summary {
+    /* Sfondo semi-trasparente */
+    background: rgba(255, 255, 255, 0.25);
+    
+    /* Effetto sfocatura  */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* Per compatibilità con Safari */
+    
+    /* Bordo sottile e semi-trasparente per definire i contorni */
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    
+    /* Ombra */
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    
+    padding: 30px;
+    border-radius: var(--bordo-radius);
+}
+
+
+/* -------------------------
+ * MIGLIORAMENTI LEGGIBILITÀ
+ * Per assicurarsi che il testo sia leggibile sopra l'effetto vetro.
+ * ------------------------- */
+
+.shipping-form h2, .order-summary h2 {
+    color: #1a253c; /* Un blu scuro per un contrasto migliore */
+    border-bottom-color: rgba(26, 37, 60, 0.2);
+}
+
+.form-group label {
+    color: #1a253c;
+    font-weight: bold;
+}
+
+/* Sfondo leggermente più opaco per gli input per una migliore leggibilità */
+.form-group input, .form-group textarea {
+    background: rgba(255, 255, 255, 0.5); 
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #333;
+}
+
+.summary-item {
+    border-bottom-color: rgba(26, 37, 60, 0.2);
+}
+
+.summary-total {
+    border-top-color: #1a253c;
+}
