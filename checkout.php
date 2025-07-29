@@ -91,7 +91,7 @@ require_once 'src/templates/header.php';
             <div class="order-summary">
                 <h2>Riepilogo Ordine</h2>
                 <ul class="summary-items-list">
-                    <?php foreach ($cartItems as $item): ?>
+                    <?php foreach ($cartItem as $item): ?>
                         <!-- MODIFICA: Aggiunta l'immagine e una struttura migliore -->
                         <li class="summary-item">
                             <img src="uploads/products/<?php echo htmlspecialchars($item['image'] ?? 'default_image.png'); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" class="summary-item-img">
