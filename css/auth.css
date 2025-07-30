@@ -1,0 +1,84 @@
+/* SFONDO PAGINA E LAYOUT */
+
+body {
+    background: linear-gradient(to right, #2c3e50, #334a63a8);
+    background-attachment: fixed;
+}
+
+/* HEADER SEMPLIFICATO */
+
+.main-header.header-simple {
+    background: transparent;
+    box-shadow: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.main-header.header-simple .logo {
+    color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+/* STILE VETRO PER IL FORM */
+
+.form-container {
+    background: rgba(255, 255, 255, 0.1); 
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    color: #ffffff; 
+}
+
+.form-container h1, .form-container p {
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.form-container p {
+    color: #eee;
+}
+
+.form-group label {
+    color: #eee;
+}
+
+.form-group input {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+}
+
+.form-group input::placeholder {
+    color: #ccc;
+}
+
+.form-footer {
+    color: #eee;
+}
+
+.form-footer a {
+    color: #8ec5fc;
+    font-weight: bold;
+    text-decoration: none; 
+    transition: color 0.3s ease;
+}
+
+.form-footer a:hover {
+    color: #fff;
+    text-decoration: underline; /* Sottolineatura al passaggio del mouse */
+}
+
+
+/* Stile per l'icona mostra password */
+.toggle-password {
+    color: #ccc;
+}
+.toggle-password:hover {
+    color: #fff;
+}
+
+/* Stile per il footer principale su sfondo scuro */
+.main-footer {
+    color: #eee; 
+    border-top-color: rgba(255, 255, 255, 0.2); /* Bordo chiaro e semi-trasparente */
+}
