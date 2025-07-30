@@ -116,10 +116,11 @@ a:hover {
     box-shadow: var(--box-shadow);
     list-style: none;
     padding: 10px 0;
-    margin-top: 5px;
     border-radius: var(--bordo-radius);
     min-width: 200px;
     z-index: 1000;
+    padding-top: 15px;
+    margin-top: -5px;
 }
 
 
@@ -294,9 +295,7 @@ a:hover {
     font-size: 2rem;
 }
 
-/* -------------------------
- * TABELLA DEI PRODOTTI
- * ------------------------- */
+/*  TABELLA DEI PRODOTTI */
 
 .dashboard-content h2 {
     margin-bottom: 20px;
@@ -332,9 +331,7 @@ a:hover {
     vertical-align: middle;
 }
 
-/* -------------------------
- * PULSANTI DI AZIONE (MODIFICA / ELIMINA)
- * ------------------------- */
+/*PULSANTI DI AZIONE (MODIFICA / ELIMINA)*/
 
 .product-table .actions {
     display: flex;
@@ -388,9 +385,7 @@ a:hover {
     margin-bottom: 30px;
 }
 
-/* -------------------------
- * MESSAGGIO CARRELLO VUOTO
- * ------------------------- */
+/* MESSAGGIO CARRELLO VUOTO */
 
 .cart-empty {
     text-align: center;
@@ -405,9 +400,7 @@ a:hover {
     margin-bottom: 20px;
 }
 
-/* -------------------------
- * LAYOUT CARRELLO PIENO
- * ------------------------- */
+/* LAYOUT CARRELLO PIENO */
 
 .cart-content {
     display: grid;
@@ -416,9 +409,7 @@ a:hover {
     align-items: flex-start;
 }
 
-/* -------------------------
- * TABELLA DEI PRODOTTI
- * ------------------------- */
+/* TABELLA DEI PRODOTTI */
 
 .cart-table {
     width: 100%;
@@ -426,7 +417,7 @@ a:hover {
     background-color: var(--colore-superficie);
     border-radius: var(--bordo-radius);
     box-shadow: var(--box-shadow);
-    overflow: hidden; /* Per applicare il border-radius anche agli angoli della tabella */
+    overflow: hidden; 
 }
 
 .cart-table th,
@@ -473,12 +464,10 @@ a:hover {
 }
 
 .remove-from-cart:hover {
-    background-color: #c82333; /* Rosso più scuro */
+    background-color: #c82333; 
 }
 
-/* -------------------------
- * RIEPILOGO ORDINE
- * ------------------------- */
+/* RIEPILOGO ORDINE */
 
 .cart-summary {
     background-color: var(--colore-superficie);
