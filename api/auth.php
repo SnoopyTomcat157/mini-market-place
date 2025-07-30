@@ -1,4 +1,22 @@
 <?php
+session_start();
+
+if(isset($_GET['action']) && $_GET['action'] === 'logout') {
+    $_SESSION = array(); //svuoto la sessione
+
+    //cancello cookie di sessione
+    if(ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000, 
+            $params["path"], $params["domain"],
+          $params["secure"], $params["httponly"]);
+    }
+    session_destroy(); //distruggo la sessione
+
+    header('Location: ../login.php'); //reinderizzo alla pagina di login
+    exit();
+}
+
 require_once '../config/config.php';
 require_once '../src/core/Database.php';
 
