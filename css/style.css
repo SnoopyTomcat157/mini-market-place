@@ -9,7 +9,6 @@
     --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Reset di base per rimuovere gli stili di default del browser */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -46,7 +45,7 @@ a:hover {
     padding: 20px 0;
 }
 
-
+/* HEADER E NAVIGAZIONE */
 
 .main-header {
     background-color: var(--colore-superficie);
@@ -67,45 +66,26 @@ a:hover {
 }
 
 .main-header.header-simple .logo {
-    display: flex;
-    align-items: center;
     justify-self: center; /* Centra il logo nella griglia */
-    overflow: hidden;
-    background-color: #dbf8fc; 
-    padding: 0.5rem; 
-    border-radius: var(--bordo-radius);
 }
 
 .main-header .logo {
     display: flex;
     align-items: center;
-    overflow: hidden;
-    background-color: #dbf8fc; 
-    padding: 0.5rem; 
-    border-radius: var(--bordo-radius);
 }
 
 .main-header .logo img{
     height: 140px; 
-    width: 750px; 
+    width: 400px; 
     object-fit: cover; 
     object-position: center; 
     transform: scale(1.2); 
     vertical-align: middle;
+    transition: transform 0.3s ease;
 }
 
 .main-header .logo img:hover {
     transform: scale(1.3); 
-    transition: transform 0.3s ease; 
-}
-
-.main-footer {
-    background-color: transparent;
-    color: var(--colore-secondario); 
-    text-align: center;
-    padding: 20px 0;
-    margin-top: 40px;
-    border-top: 1px solid #ddd; 
 }
 
 .main-nav ul {
@@ -115,11 +95,9 @@ a:hover {
     gap: 20px;
 }
 
-
 .main-nav .dropdown {
     position: relative; 
 }
-
 
 .main-nav .dropdown-menu {
     display: none;
@@ -137,7 +115,6 @@ a:hover {
     margin-top: -5px;
 }
 
-
 .main-nav .dropdown-menu a {
     display: block;
     padding: 10px 20px;
@@ -149,12 +126,10 @@ a:hover {
     background-color: #e9ecef;
 }
 
-
 .main-nav .dropdown:hover .dropdown-menu {
     display: block;
 }
 
-/* Pulsante Hamburger nascosto su desktop */
 .mobile-menu-toggle {
     display: none;
     background: none;
@@ -172,93 +147,32 @@ a:hover {
     fill: var(--colore-secondario);
 }
 
-
-
-@media (max-width: 768px) {
-    
-    .mobile-menu-toggle {
-        display: block;
-    }
-
-    .main-nav {
-        display: none; 
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background-color: var(--colore-superficie);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    
-   
-    .main-nav.is-active {
-        display: block;
-    }
-
-    
-    .main-nav ul {
-        flex-direction: column;
-        gap: 0;
-        padding: 10px 0;
-    }
-
-    .main-nav li {
-        width: 100%;
-    }
-
-    .main-nav a {
-        display: block;
-        padding: 15px 20px;
-        text-align: center;
-    }
-    
-   
-    .main-nav .dropdown:hover .dropdown-menu {
-        display: none; 
-    }
-    
-    .main-nav .dropdown-menu {
-        position: static; 
-        box-shadow: none;
-        background-color: #f1f1f1;
-        border-radius: 0;
-        min-width: 100%;
-        padding: 0;
-        margin: 0;
-    }
-    
-    .main-nav .dropdown-menu a {
-        padding-left: 40px; 
-        text-align: center;
-        font-weight: normal;
-        background-color: #f8f8f8;
-    }
-}
+/* BARRE DI RICERCA */
 
 .search-container-header {
     width: 100%;
     max-width: 700px;
-    margin: 0 auto; /* Centra la barra di ricerca nello spazio disponibile */
+    margin: 0 auto;
 }
 
 .search-bar {
     display: flex;
     border-radius: var(--bordo-radius);
     overflow: hidden;
-    border: 1px solid #ddd;
+    border: 1.5px solid #ddd;
 }
 
 .search-bar select,
 .search-bar input {
     border: none;
-    padding: 12px 15px; /* Padding leggermente ridotto per l'header */
+    padding: 12px 15px;
     font-size: 0.95rem;
 }
 
 .search-bar select:focus,
 .search-bar input:focus {
     outline: none;
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); /* Aggiunge un anello di focus */
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
 }
 
 .search-bar select {
@@ -266,11 +180,11 @@ a:hover {
     color: var(--colore-secondario);
     border-right: 1px solid #ddd;
     cursor: pointer;
-    flex-shrink: 0; /* Impedisce al select di restringersi */
+    flex-shrink: 0;
 }
 
 .search-bar input[type="text"] {
-    flex-grow: 1; /* Fa in modo che l'input occupi tutto lo spazio rimanente */
+    flex-grow: 1;
 }
 
 .search-bar .search-button {
@@ -288,6 +202,8 @@ a:hover {
 .search-bar .search-button:hover {
     background-color: #0056b3;
 }
+
+/* DASHBOARD E TABELLE */
 
 .dashboard-container {
     padding: 20px;
@@ -309,15 +225,13 @@ a:hover {
     font-size: 2rem;
 }
 
-/*  TABELLA DEI PRODOTTI */
-
 .dashboard-content h2 {
     margin-bottom: 20px;
 }
 
 .product-table {
     width: 100%;
-    border-collapse: collapse; /* Rimuove lo spazio tra le celle */
+    border-collapse: collapse;
 }
 
 .product-table th,
@@ -333,10 +247,9 @@ a:hover {
 }
 
 .product-table tbody tr:hover {
-    background-color: #f1f1f1; /* Effetto hover sulle righe */
+    background-color: #f1f1f1;
 }
 
-/* Stile per l'immagine del prodotto nella dashboard */
 .dashboard-product-img {
     width: 60px;
     height: 60px;
@@ -345,11 +258,9 @@ a:hover {
     vertical-align: middle;
 }
 
-/*PULSANTI DI AZIONE (MODIFICA / ELIMINA)*/
-
 .product-table .actions {
     display: flex;
-    gap: 10px; /* Spazio tra i pulsanti */
+    gap: 10px;
 }
 
 .action-btn {
@@ -368,24 +279,23 @@ a:hover {
     text-decoration: none;
 }
 
-/* Stile per il pulsante "Modifica" */
 .btn-edit {
     background-color: var(--colore-primario);
 }
 
 .btn-edit:hover {
-    background-color: #0056b3; /* Blu più scuro */
+    background-color: #0056b3;
 }
 
-/* Stile per il pulsante "Elimina" */
 .btn-delete {
     background-color: var(--colore-errore);
 }
 
 .btn-delete:hover {
-    background-color: #c82333; /* Rosso più scuro */
+    background-color: #c82333;
 }
 
+/* PAGINA CARRELLO */
 
 .cart-container {
     width: 100%;
@@ -398,8 +308,6 @@ a:hover {
     text-align: center;
     margin-bottom: 30px;
 }
-
-/* MESSAGGIO CARRELLO VUOTO */
 
 .cart-empty {
     text-align: center;
@@ -414,16 +322,12 @@ a:hover {
     margin-bottom: 20px;
 }
 
-/* LAYOUT CARRELLO PIENO */
-
 .cart-content {
     display: grid;
-    grid-template-columns: 2fr 1fr; /* 2/3 per la tabella, 1/3 per il riepilogo */
+    grid-template-columns: 2fr 1fr;
     gap: 30px;
     align-items: flex-start;
 }
-
-/* TABELLA DEI PRODOTTI */
 
 .cart-table {
     width: 100%;
@@ -481,14 +385,12 @@ a:hover {
     background-color: #c82333; 
 }
 
-/* RIEPILOGO ORDINE */
-
 .cart-summary {
     background-color: var(--colore-superficie);
     padding: 20px;
     border-radius: var(--bordo-radius);
     box-shadow: var(--box-shadow);
-    position: sticky; /* Rimane visibile mentre si scorre la tabella */
+    position: sticky;
     top: 20px;
 }
 
@@ -512,15 +414,98 @@ a:hover {
     font-size: 1.1rem;
 }
 
+/* FOOTER */
+
+.main-footer {
+    background-color: transparent;
+    color: var(--colore-secondario); 
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 40px;
+    border-top: 1px solid #ddd; 
+}
+
+/* RESPONSIVE DESIGN */
+
 @media (max-width: 992px) {
+    /* Nasconde la ricerca e la navigazione per fare spazio */
+    .search-container-header, .main-nav {
+        display: none;
+    }
+
+    /* Mostra il pulsante hamburger */
+    .mobile-menu-toggle {
+        display: block;
+    }
+
+    /* Adatta il layout dell'header per mobile */
+    .main-header {
+        grid-template-columns: 1fr auto; /* Logo a sinistra, hamburger a destra */
+    }
+
+    /* Stili per il menu a comparsa */
+    .main-nav.is-active {
+        display: block;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: var(--colore-superficie);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .main-nav ul {
+        flex-direction: column;
+        gap: 0;
+        padding: 10px 0;
+    }
+
+    .main-nav li {
+        width: 100%;
+    }
+
+    .main-nav a {
+        display: block;
+        padding: 15px 20px;
+        text-align: center;
+    }
+    
+    .main-nav .dropdown:hover .dropdown-menu {
+        display: none; 
+    }
+    
+    .main-nav .dropdown-menu {
+        position: static; 
+        box-shadow: none;
+        background-color: #f1f1f1;
+        border-radius: 0;
+        min-width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .main-nav .dropdown-menu a {
+        padding-left: 40px; 
+        text-align: center;
+        font-weight: normal;
+        background-color: #f8f8f8;
+    }
+
     .cart-content {
-        grid-template-columns: 1fr; /* Su schermi medi, una sola colonna */
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Riduciamo ulteriormente la dimensione del logo su schermi molto piccoli */
+    .main-header .logo img {
+        height: 80px;
     }
 }
 
 @media (max-width: 576px) {
     .cart-table thead {
-        display: none; /* Nasconde l'intestazione su mobile */
+        display: none;
     }
 
     .cart-table, .cart-table tbody, .cart-table tr, .cart-table td {
