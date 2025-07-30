@@ -11,7 +11,7 @@ $totalPrice = 0;
 $errorMessage = null;
 
 try{
-    $database = new Database();
+    /*$database = new Database();
     $pdo = $database->getConnection();
 
     $sql = "SELECT p.id_prodotto, p.nome_prodotto, p.prezzo, p.nome_file_immagine, cu.quantita
@@ -22,7 +22,7 @@ try{
     $stmt->execute([$_SESSION['user_id']]);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    if(empty($result)){
+   /* if(empty($result)){
         header('Location: cart_page.php');
         exit();
     }
@@ -36,7 +36,7 @@ try{
             'quantity' => $row['quantita'],
             'subtotal' => $total 
         ];
-    }
+    }*/
 } catch (Exception $e){
     error_log($e->getMessage());
     $errorMessage = "Si è verificato un errore durante il recupero dei dati del carrello. Riprova più tardi.";
@@ -61,8 +61,12 @@ require_once 'src/templates/header.php';
                 <h2>Indirizzo di Spedizione</h2>
                 <form id="checkoutForm">
                     <div class="form-group">
-                        <label for="nome_completo">Nome Completo</label>
-                        <input type="text" id="nome_completo" name="nome_completo" required>
+                        <label for="nome">Nome</label>
+                        <input type="text" id="nome" name="nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cognome">Cognome</label>
+                        <input type="text" id="cognome" name="cognome" required>
                     </div>
                     <div class="form-group">
                         <label for="indirizzo">Indirizzo (Via, N. civico)</label>
@@ -92,7 +96,6 @@ require_once 'src/templates/header.php';
                 <h2>Riepilogo Ordine</h2>
                 <ul class="summary-items-list">
                     <?php foreach ($cartItem as $item): ?>
-                        <!-- MODIFICA: Aggiunta l'immagine e una struttura migliore -->
                         <li class="summary-item">
                             <img src="uploads/products/<?php echo htmlspecialchars($item['image'] ?? 'default_image.png'); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" class="summary-item-img">
                             <div class="summary-item-details">
