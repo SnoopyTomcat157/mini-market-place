@@ -11,7 +11,7 @@ $totalPrice = 0;
 $errorMessage = null;
 
 try{
-    /*$database = new Database();
+    $database = new Database();
     $pdo = $database->getConnection();
 
     $sql = "SELECT p.id_prodotto, p.nome_prodotto, p.prezzo, p.nome_file_immagine, cu.quantita
@@ -22,7 +22,7 @@ try{
     $stmt->execute([$_SESSION['user_id']]);
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-   /* if(empty($result)){
+    if(empty($result)){
         header('Location: cart_page.php');
         exit();
     }
@@ -36,7 +36,7 @@ try{
             'quantity' => $row['quantita'],
             'subtotal' => $total 
         ];
-    }*/
+    }
 } catch (Exception $e){
     error_log($e->getMessage());
     $errorMessage = "Si è verificato un errore durante il recupero dei dati del carrello. Riprova più tardi.";
