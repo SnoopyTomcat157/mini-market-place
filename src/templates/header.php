@@ -23,7 +23,7 @@ if ($pdo) {
 }
 
 $currentPage = basename($_SERVER['SCRIPT_NAME']);
-$pages = ['login.php', 'register.php'];
+$pages = ['login.php', 'register.php', 'checkout.php'];
 $isPages = in_array($currentPage, $pages);
 ?>
 <!DOCTYPE html>
