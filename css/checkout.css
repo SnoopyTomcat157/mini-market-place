@@ -1,29 +1,20 @@
-/*
- * Foglio di stile dedicato per la pagina di Checkout (Effetto Glassmorphism Scuro - Versione più chiara)
- */
-
-/* -------------------------
- * SFONDO PAGINA E LAYOUT
- * ------------------------- */
+/* SFONDO PAGINA E LAYOUT */
 
 body {
-    /* MODIFICA: Un gradiente scuro ma più luminoso e con una punta di colore */
     background: linear-gradient(to right, #2c3e50, #334a63a8);
     background-attachment: fixed;
 }
 
-/* -------------------------
- * HEADER SEMPLIFICATO SU SFONDO SPECIALE
- * ------------------------- */
+/* HEADER SEMPLIFICATO SU SFONDO SPECIALE */
 
-/* Rende l'header trasparente su questa pagina per integrarsi con lo sfondo */
+/* header trasparente su questa pagina per integrarsi con lo sfondo */
 .main-header.header-simple {
-    background: transparent; /* Rimuove lo sfondo bianco */
-    box-shadow: none; /* Rimuove l'ombra */
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Aggiunge una linea sottile per separazione */
+    background: transparent; 
+    box-shadow: none; 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); 
 }
 
-/* Assicura che il logo sia bianco e leggibile sullo sfondo colorato */
+
 .main-header.header-simple .logo {
     color: #ffffff;
     text-shadow: 0 1px 3px rgba(0,0,0,0.2);
@@ -33,7 +24,7 @@ body {
 .checkout-container h1 {
     text-align: center;
     margin-bottom: 40px;
-    color: #ffffff; /* Testo del titolo bianco per contrasto */
+    color: #ffffff; 
     font-size: 2.5rem;
     text-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
@@ -46,9 +37,7 @@ body {
     align-items: flex-start;
 }
 
-/* -------------------------
- * STILE VETRO PER I PANNELLI (TEMA SCURO)
- * ------------------------- */
+/* STILE VETRO PER I PANNELLI */
 
 .shipping-form, .order-summary {
     background: rgba(255, 255, 255, 0.1); 
@@ -58,7 +47,7 @@ body {
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     padding: 30px;
     border-radius: 15px;
-    color: #ffffff; /* Testo bianco per leggibilità */
+    color: #ffffff; 
 }
 
 .shipping-form h2, .order-summary h2 {
@@ -67,9 +56,7 @@ body {
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* -------------------------
- * STILE FORM E RIEPILOGO (TEMA SCURO)
- * ------------------------- */
+/* STILE FORM E RIEPILOGO */
 
 .form-group label {
     font-weight: bold;
@@ -136,9 +123,7 @@ body {
     padding: 15px;
 }
 
-/* -------------------------
- * RESPONSIVE DESIGN
- * ------------------------- */
+/* RESPONSIVE DESIGN */
 
 @media (max-width: 992px) {
     .checkout-layout {
