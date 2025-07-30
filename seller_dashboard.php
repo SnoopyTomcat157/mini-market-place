@@ -8,7 +8,7 @@
         exit();
     }
 
-    if(($_SESSION['user_role'] !== 'venditore') && ($_SESSION['user_role'] !== 'admin')) {
+    if($_SESSION['user_role'] !== 'venditore') {
         header('Location: error_403_page.php');
         exit();
     }
@@ -41,7 +41,8 @@
             <a href="add_product.php" class="button-primary">Aggiungi Nuovo Prodotto</a>
         </div>
         <?php if ($errorMessage): ?>
-            <p class="feedback-message error"<?php echo $errorMessage?>></p>
+            
+            <p class="feedback-message error"<?php var_dump($errorMessage); ?><?php echo $errorMessage?>></p>
         <?php endif; ?>
 
         <div class="dashboard-content">
