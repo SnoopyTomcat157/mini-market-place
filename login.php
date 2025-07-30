@@ -11,7 +11,9 @@
     require_once 'src/templates/header.php';
 
     ?>
-
+    
+    <link rel="stylesheet" href="css/auth.css">
+    
     <section class='form-container'>
         <h1>Accedi al tuo Account</h1>
         <p>Bentornato! Inserisci le tue credenziali per continuare.</p>
