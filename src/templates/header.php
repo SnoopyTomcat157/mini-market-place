@@ -39,7 +39,7 @@ $isPages = in_array($currentPage, $pages);
 <body>
 
 <header class="main-header <?php if ($isPages) echo 'header-simple'; ?>">
-    <a href="index.php" class="logo"><img src="images/SVG/logo.svg" alt="MiniMarketplace"></a>
+    <a href="index.php" class="logo"><img src="images/SVG/logo1.svg" alt="MiniMarketplace"></a>
     <?php
         // Mostra la barra di ricerca e la navbar solo se non siamo nelle pagine di login o registrazione
         if(!$isPages) :
