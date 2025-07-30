@@ -65,7 +65,7 @@ body {
 
 .form-footer a:hover {
     color: #fff;
-    text-decoration: underline; /* Sottolineatura al passaggio del mouse */
+    text-decoration: underline; 
 }
 
 
@@ -80,5 +80,5 @@ body {
 /* Stile per il footer principale su sfondo scuro */
 .main-footer {
     color: #eee; 
-    border-top-color: rgba(255, 255, 255, 0.2); /* Bordo chiaro e semi-trasparente */
+    border-top-color: rgba(255, 255, 255, 0.2); 
 }
