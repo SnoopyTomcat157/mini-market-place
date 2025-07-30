@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(response => response.json().then(data => ({ ok: response.ok, data })))
                 .then(({ ok, data }) => {
                     if (!ok) throw new Error(data.message || 'Errore.');
-                    fetchResult = { success: true, message: data.message };
+                    fetchResult = { success: true, message: data.message, role: data.role};
                 })
                 .catch(error => {
                     fetchResult = { success: false, message: error.message };
@@ -171,7 +171,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         if (fetchResult && fetchResult.success) {
                             showSuccess(fetchResult.message);
-                            setTimeout(() => { window.location.href = 'user_dashboard.php'; }, 1500);
+                            setTimeout(() => { let redirectUrl = 'user_dashboard.php';
+                                if(fetchResult.role === 'admin') redirectUrl = 'admin_dashboard.php';
+                                window.location.href = redirectUrl;
+                            }, 1500);
                         } else if (fetchResult) {
                             showError(fetchResult.message);
                             submitButton.disabled = false;

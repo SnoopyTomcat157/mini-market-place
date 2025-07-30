@@ -46,7 +46,7 @@ if ($action === 'register') {
     //controllo lunghezza username
     if(strlen($user) < 3 || strlen($user) > 20){
         http_response_code(400);
-        echo json_encode(['success' => false, 'message' => 'Username deve avre dai 3 ai 20 caratteri.']);
+        echo json_encode(['success' => false, 'message' => 'Username deve avere dai 3 ai 20 caratteri.']);
         exit();
     }
 
@@ -131,12 +131,11 @@ if ($action === 'register') {
         }
 
         // Login avvenuto con successo
-        session_start();
         session_regenerate_id(true); //per maggiore sicurezza
         $_SESSION['user_id'] = $user['id_utente'];
         $_SESSION['username'] = $user['username'];
         $_SESSION['user_role'] = $user['ruolo'];
-        echo json_encode(['success' => true, 'message' => 'Login avvenuto con successo.']);
+        echo json_encode(['success' => true, 'message' => 'Login avvenuto con successo.', 'role' => $user['ruolo']]);
 
         //unione del carrello con la sessione
         if(isset($_SESSION['cart']) && !empty($_SESSION['cart'])){
