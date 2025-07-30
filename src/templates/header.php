@@ -75,28 +75,39 @@ $isPages = in_array($currentPage, $pages);
             <li><a href="index.php">Home</a></li>
             
             <?php if (isset($_SESSION['user_id'])): ?>
-                <!-- dropdown per l'utente loggato -->
-                <li class="dropdown">
-                    <a href="user_dashboard.php">Il Mio Account</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="user_dashboard.php">Dashboard</a></li>
-                        <li><a href="order_history.php">I Miei Ordini</a></li>
-                        <li><a href="edit_profile.php">Modifica Profilo</a></li>
-                    </ul>
-                </li>
+            <!-- menu a tendina per tutti gli utenti loggati -->
+            <li class="dropdown">
+                <a href="user_dashboard.php">Il Mio Account</a>
+                <ul class="dropdown-menu">
+                    <li><a href="user_dashboard.php">Dashboard</a></li>
+                    <li><a href="order_history.php">I Miei Ordini</a></li>
+                    <li><a href="edit_profile.php">Modifica Profilo</a></li>
+                </ul>
+            </li>
+            
+            <!-- menu a tendina specifico per i venditori -->
+            <?php if ($_SESSION['user_role'] === 'venditore'): ?>
                 <li class="dropdown">
                     <a href="seller_dashboard.php">Area Venditore</a>
-                     <ul class="dropdown-menu">
+                    <ul class="dropdown-menu">
                         <li><a href="seller_dashboard.php">I Miei Prodotti</a></li>
                         <li><a href="add_product.php">Aggiungi Prodotto</a></li>
                     </ul>
                 </li>
-                <li><a href="api/auth.php?action=logout">Logout</a></li>
-            <?php else: ?>
-                <!-- utente non loggato -->
-                <li><a href="login.php">Login</a></li>
-                <li><a href="register.php">Registrati</a></li>
             <?php endif; ?>
+
+            <!-- link per admin -->
+            <?php if ($_SESSION['user_role'] === 'admin'): ?>
+                <li><a href="admin_dashboard.php">Pannello Admin</a></li>
+            <?php endif; ?>
+
+            <li><a href="api/auth.php?action=logout">Logout</a></li>
+        <?php else: ?>
+            <!-- link per utenti non loggati -->
+            <li><a href="login.php">Login</a></li>
+            <li><a href="register.php">Registrati</a></li>
+        <?php endif; ?>
+
 
             <li>
                 <a href="cart_page.php" class="cart-link">
