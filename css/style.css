@@ -342,6 +342,11 @@ a:hover {
     padding: 12px 25px;
     font-size: 1rem;
 }
+
+.button-primary.is-added {
+    background-color: var(--colore-successo); /* Colore verde di successo */
+    cursor: default;
+}
 /* DASHBOARD E TABELLE */
 
 .dashboard-container {
