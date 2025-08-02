@@ -56,7 +56,7 @@ require_once 'src/templates/header.php';
         <p class="feedback-message error"><?php echo $errorMessage; ?></p>
     <?php else: ?>
           <div class="checkout-layout">
-            <!-- Colonna sinistra: Form per i dati di spedizione -->
+            <!-- Colonna sinistra: form per i dati di spedizione -->
             <div class="shipping-form">
                 <h2>Indirizzo di Spedizione</h2>
                 <form id="checkoutForm">
@@ -88,10 +88,29 @@ require_once 'src/templates/header.php';
                         <label for="note">Note per la consegna (opzionale)</label>
                         <textarea id="note" name="note" rows="3"></textarea>
                     </div>
+                      <!-- Colonna sinistra: dati di pagamento inizialmente nascosti -->
+                <div class="payment-form checkout-step" id="payment-step">
+                    <h2>2. Dati di Pagamento</h2>
+                    <p>Inserisci i dati per il pagamento (simulato).</p>
+                    <div class="form-group">
+                        <label for="card_number">Numero Carta</label>
+                        <input type="text" id="card_number" name="card_number" placeholder="1111 2222 3333 4444" required>
+                    </div>
+                    <div class="form-group-row">
+                        <div class="form-group">
+                            <label for="expiry_date">Data Scadenza (MM/AA)</label>
+                            <input type="text" id="expiry_date" name="expiry_date" placeholder="12/25" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="cvv">CVV</label>
+                            <input type="text" id="cvv" name="cvv" placeholder="123" required>
+                        </div>
+                    </div>
+                </div>
                 </form>
             </div>
 
-            <!-- Colonna destra: Riepilogo dell'ordine -->
+            <!-- Colonna destra: riepilogo dell'ordine -->
             <div class="order-summary">
                 <h2>Riepilogo Ordine</h2>
                 <ul class="summary-items-list">
@@ -110,6 +129,8 @@ require_once 'src/templates/header.php';
                     <strong>Totale</strong>
                     <strong><?php echo number_format($totalPrice, 2, ',', '.'); ?> €</strong>
                 </div>
+                <button type="button" id="toPaymentBtn" class="button-primary checkout-btn">Vai al Pagamento</button>
+                <!-- Pulsante finale per pagare (nascosto) -->
                 <button type="submit" form="checkoutForm" class="button-primary checkout-btn">Completa Ordine</button>
                 <div id="feedbackMessage" class="feedback-message" style="margin-top: 15px;"></div>
             </div>
