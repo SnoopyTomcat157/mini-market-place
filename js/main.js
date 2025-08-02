@@ -6,7 +6,6 @@ window.updateCartIcon = async function() {
         if (data.success) {
             const cartCountSpan = document.getElementById('cart-item-count');
             if (cartCountSpan) {
-                // Usiamo "totalItemCount" che il nostro backend ora calcolerà
                 const totalItems = data.totalItemCount || 0;
                 if (totalItems > 0) {
                     cartCountSpan.textContent = totalItems;
