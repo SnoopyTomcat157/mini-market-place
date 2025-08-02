@@ -1,0 +1,54 @@
+.success-container {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: var(--colore-superficie);
+    border-radius: var(--bordo-radius);
+    box-shadow: var(--box-shadow);
+    margin: 50px auto;
+    max-width: 600px;
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    color: var(--colore-successo);
+    margin-bottom: 20px;
+}
+
+.success-container h1 {
+    font-size: 2.5rem;
+    color: var(--colore-successo);
+    margin-bottom: 15px;
+}
+
+.success-container p {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.order-number {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: var(--colore-secondario);
+}
+
+.success-actions {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.button-secondary {
+    background-color: #6c757d;
+    color: white;
+    padding: 10px 20px;
+    border-radius: var(--bordo-radius);
+    font-weight: bold;
+}
+
+.button-secondary:hover {
+    background-color: #5a6268;
+    text-decoration: none;
+}
