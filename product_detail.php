@@ -69,10 +69,11 @@
 
             <div class="product-actions">
                 <input type="number" id="quantityInput" value="1" min="1" max="<?php echo htmlspecialchars($product['quantita_disponibile']); ?>" class="quantity-input">
-                <button id="addToCartButton" class="button-primary" data-product-id="<?php echo $product['id_prodotto']; ?>">Aggiungi al Carrello</button>
+                <button id="addToCartBtn" class="button-primary" data-product-id="<?php echo $product['id_prodotto']; ?>">
+                    <span class="button-text"> Aggiungi al Carrello </span>
+                </button>
             </div>
-            <div id="feedbackMessage" class="feedback-message"></div>
-        </div>
+       
         <?php endif; ?>
 </section>
 
