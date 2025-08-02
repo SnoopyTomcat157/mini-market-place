@@ -19,7 +19,7 @@
         $sql = "SELECT p.*, c.nome_categoria, u.username AS nome_venditore
                 FROM prodotti p
                 LEFT JOIN categorie c ON p.id_categoria = c.id_categoria
-                LEFT JOIN utenti u ON p.id_venditore = u.id_utente
+                LEFT JOIN utenti u ON p.id_utente_venditore = u.id_utente
                 WHERE p.id_prodotto = ?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$product_id]);
@@ -64,7 +64,7 @@
 
             <div class="product-description">
                 <h2>Descrizione</h2>
-                <p><?php echo nl2br(htmlspecialchars($product['descrizione'])); ?></p>
+                <p><?php echo nl2br(htmlspecialchars($product['descrizione_prodotto'])); ?></p>
             </div>
 
             <div class="product-actions">

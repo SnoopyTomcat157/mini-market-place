@@ -45,7 +45,7 @@ require_once 'src/templates/header.php';
     <?php elseif (empty($products)): ?>
         <p>Nessun prodotto disponibile al momento. Torna a trovarci presto!</p>
     <?php else: ?>
-        <div class =products-grid>
+        <div class =product-grid>
             <?php foreach ($products as $product): ?>
                 <?php include 'src/templates/product_card.php'; ?>
             <?php endforeach; ?>
