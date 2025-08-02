@@ -1,4 +1,4 @@
--- Creazione del database (opzionale, puoi crearlo manualmente da phpMyAdmin)
+-- Creazione del database
 CREATE DATABASE IF NOT EXISTS furceri_672543 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE furceri_672543;
 
@@ -12,7 +12,7 @@ CREATE TABLE utenti (
     data_registrazione TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Tabella delle categorie (MODIFICATA)
+-- Tabella delle categorie
 CREATE TABLE categorie (
     id_categoria INT AUTO_INCREMENT PRIMARY KEY,
     id_categoria_padre INT NULL, -- Può essere NULL per le categorie di primo livello
@@ -31,6 +31,7 @@ CREATE TABLE prodotti (
     prezzo DECIMAL(10, 2) NOT NULL,
     quantita_disponibile INT NOT NULL DEFAULT 0,
     nome_file_immagine VARCHAR(255),
+    stato_prodotto VARCHAR(50) NOT NULL DEFAULT 'disponibile',
     data_inserimento TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_utente_venditore) REFERENCES utenti(id_utente) ON DELETE CASCADE,
     FOREIGN KEY (id_categoria) REFERENCES categorie(id_categoria) ON DELETE RESTRICT
