@@ -6,10 +6,11 @@ require_once '../src/core/Database.php';
 function getCartState($pdo) {
     $cartItems = [];
     $totalPrice = 0;
+    $totalItemCount = 0;
     $isUserLoggedIn = isset($_SESSION['user_id']);
 
     if ($isUserLoggedIn) {
-        //utente loggato:
+        // Logica per utente loggato: recupera dal DB
         $sql = "SELECT p.id_prodotto, p.nome_prodotto, p.prezzo, p.nome_file_immagine, cu.quantita
                 FROM carrelli_utente cu
                 JOIN prodotti p ON cu.id_prodotto = p.id_prodotto
@@ -21,6 +22,7 @@ function getCartState($pdo) {
         foreach ($results as $row) {
             $subtotal = $row['prezzo'] * $row['quantita'];
             $totalPrice += $subtotal;
+            $totalItemCount += $row['quantita'];
             $cartItems[] = [
                 'id' => $row['id_prodotto'],
                 'name' => $row['nome_prodotto'],
@@ -30,12 +32,10 @@ function getCartState($pdo) {
                 'subtotal' => $subtotal
             ];
         }
-        $itemCount = count($cartItems);
-
     } else {
-        // utente ospite
+        // Logica per utente ospite: recupera dalla sessione
         if (empty($_SESSION['cart'])) {
-            return ['cartItems' => [], 'totalPrice' => 0, 'itemCount' => 0];
+            return ['cartItems' => [], 'totalPrice' => 0, 'totalItemCount' => 0];
         }
         
         $productIds = array_keys($_SESSION['cart']);
@@ -58,98 +58,105 @@ function getCartState($pdo) {
                 'subtotal' => $subtotal
             ];
         }
-        $itemCount = count($_SESSION['cart']);
+        $totalItemCount = array_sum($_SESSION['cart']);
     }
     
     return [
         'cartItems' => $cartItems,
         'totalPrice' => $totalPrice,
-        'itemCount' => $itemCount
+        'totalItemCount' => $totalItemCount
     ];
 }
 
 header('Content-Type: application/json');
-
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo json_encode(['success' => false, 'message' => 'Metodo non consentito.']);
-    exit();
-}
-
-$isUserLoggedIn = isset($_SESSION['user_id']);
-$action = isset($_POST['action']) ? $_POST['action'] : '';
-$productId = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
-$quantity = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 1;
-
-if ($productId <= 0 && in_array($action, ['add', 'update', 'remove'])) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'ID prodotto non valido.']);
-    exit();
-}
+$requestMethod = $_SERVER['REQUEST_METHOD'];
 
 try {
     $db = new Database();
     $pdo = $db->getConnection();
-    $message = '';
 
-    if ($isUserLoggedIn) {
-        // utente loggato
-        $userId = $_SESSION['user_id'];
-        
-        switch ($action) {
-            case 'add':
-                $sql = "INSERT INTO carrelli_utente (id_utente, id_prodotto, quantita) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE quantita = quantita + ?";
-                $stmt = $pdo->prepare($sql);
-                $stmt->execute([$userId, $productId, $quantity, $quantity]);
-                $message = 'Prodotto aggiunto al carrello!';
-                break;
-            case 'update':
-                $sql = "UPDATE carrelli_utente SET quantita = ? WHERE id_utente = ? AND id_prodotto = ?";
-                $stmt = $pdo->prepare($sql);
-                $stmt->execute([$quantity, $userId, $productId]);
-                $message = 'Carrello aggiornato.';
-                break;
-            case 'remove':
-                $sql = "DELETE FROM carrelli_utente WHERE id_utente = ? AND id_prodotto = ?";
-                $stmt = $pdo->prepare($sql);
-                $stmt->execute([$userId, $productId]);
-                $message = 'Prodotto rimosso dal carrello.';
-                break;
-            default:
-                throw new Exception('Azione non valida.');
-        }
-
-    } else {
-        // utente ospite
-        if (!isset($_SESSION['cart'])) $_SESSION['cart'] = [];
-
-        switch ($action) {
-            case 'add':
-                $_SESSION['cart'][$productId] = (isset($_SESSION['cart'][$productId]) ? $_SESSION['cart'][$productId] : 0) + $quantity;
-                $message = 'Prodotto aggiunto al carrello!';
-                break;
-            case 'update':
-                if ($quantity > 0) $_SESSION['cart'][$productId] = $quantity;
-                else unset($_SESSION['cart'][$productId]);
-                $message = 'Carrello aggiornato.';
-                break;
-            case 'remove':
-                unset($_SESSION['cart'][$productId]);
-                $message = 'Prodotto rimosso dal carrello.';
-                break;
-            default:
-                throw new Exception('Azione non valida.');
-        }
+    if ($requestMethod === 'GET' && isset($_GET['action']) && $_GET['action'] === 'get_count') {
+        $cartState = getCartState($pdo);
+        echo json_encode(['success' => true, 'totalItemCount' => $cartState['totalItemCount']]);
+        exit();
     }
 
-    // ricalcolo lo stato del carrello
-    $cartState = getCartState($pdo);
+    if ($requestMethod === 'POST') {
+        $isUserLoggedIn = isset($_SESSION['user_id']);
+        $action = isset($_POST['action']) ? $_POST['action'] : '';
+        $productId = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
+        $quantity = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 1;
+        $message = '';
 
-    $response = [
-        'success' => true,
-        'message' => $message,
-        'cartState' => $cartState
-    ];
+        if ($productId <= 0 && in_array($action, ['add', 'update', 'remove'])) {
+            throw new Exception('ID prodotto non valido.');
+        }
+
+        if ($isUserLoggedIn) {
+            // Logica per utente loggato (database)
+            $userId = $_SESSION['user_id'];
+            switch ($action) {
+                case 'add':
+                    $sql = "INSERT INTO carrelli_utente (id_utente, id_prodotto, quantita) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE quantita = quantita + ?";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute([$userId, $productId, $quantity, $quantity]);
+                    $message = 'Prodotto aggiunto al carrello!';
+                    break;
+                case 'update':
+                    if ($quantity > 0) {
+                        $sql = "UPDATE carrelli_utente SET quantita = ? WHERE id_utente = ? AND id_prodotto = ?";
+                        $stmt = $pdo->prepare($sql);
+                        $stmt->execute([$quantity, $userId, $productId]);
+                    } else {
+                        $sql = "DELETE FROM carrelli_utente WHERE id_utente = ? AND id_prodotto = ?";
+                        $stmt = $pdo->prepare($sql);
+                        $stmt->execute([$userId, $productId]);
+                    }
+                    $message = 'Carrello aggiornato.';
+                    break;
+                case 'remove':
+                    $sql = "DELETE FROM carrelli_utente WHERE id_utente = ? AND id_prodotto = ?";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute([$userId, $productId]);
+                    $message = 'Prodotto rimosso dal carrello.';
+                    break;
+                default:
+                    throw new Exception('Azione non valida.');
+            }
+        } else {
+            // Logica per utente ospite (sessione)
+            if (!isset($_SESSION['cart'])) $_SESSION['cart'] = [];
+            switch ($action) {
+                case 'add':
+                    $_SESSION['cart'][$productId] = (isset($_SESSION['cart'][$productId]) ? $_SESSION['cart'][$productId] : 0) + $quantity;
+                    $message = 'Prodotto aggiunto al carrello!';
+                    break;
+                case 'update':
+                    if ($quantity > 0) $_SESSION['cart'][$productId] = $quantity;
+                    else unset($_SESSION['cart'][$productId]);
+                    $message = 'Carrello aggiornato.';
+                    break;
+                case 'remove':
+                    unset($_SESSION['cart'][$productId]);
+                    $message = 'Prodotto rimosso dal carrello.';
+                    break;
+                default:
+                    throw new Exception('Azione non valida.');
+            }
+        }
+
+        // Dopo ogni azione, ricalcola lo stato completo del carrello
+        $cartState = getCartState($pdo);
+        $response = [
+            'success' => true,
+            'message' => $message,
+            'cartState' => $cartState
+        ];
+        echo json_encode($response);
+        exit();
+    }
+
+    throw new Exception('Metodo o azione non supportati.');
 
 } catch (Exception $e) {
     http_response_code(400);
@@ -157,7 +164,6 @@ try {
         'success' => false,
         'message' => $e->getMessage()
     ];
+    echo json_encode($response);
 }
-
-echo json_encode($response);
 ?>

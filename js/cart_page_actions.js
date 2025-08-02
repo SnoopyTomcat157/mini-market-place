@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cartContainer.addEventListener('click', async (event) => {
             if (event.target && event.target.classList.contains('remove-from-cart')){
                 const button = event.target;
-                const productId = button.dataset.itemId;
+                const productId = button.dataset.productId;
 
                 if(confirm('Sei sicuro di voler rimuovere questo oggetto dal carrello?')){
                     await updateCart('remove', productId, 0);
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         formData.append('quantity', quantity);
 
         try{
-            const response = await fetch('/cart/update', {
+            const response = await fetch('api/cart.php', {
                 method: 'POST',
                 body: formData
             });
@@ -45,13 +45,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const result = await response.json();
 
             if(!response.ok) {
-                throw new Error(result.message || 'Errore durante del server');
+                throw new Error(result.message || 'Errore del server');
             }
 
             updateCartView(result.cartState);
         } catch (error) {
-            console.error('Errore durante l\'aggiornamento del carrello:', error);
-            alert('Si è verificato un errore durante l\'aggiornamento del carrello. Riprova più tardi.' + error.message);
+            console.error('Errore durante l\'aggiornamento del carrello: ', error);
+            alert('Si è verificato un errore durante l\'aggiornamento del carrello. Riprova più tardi. ' + error.message);
         }
 
     }
@@ -59,15 +59,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateCartView(cartState){
         const cartTableBody = document.querySelector('.cart-table tbody');
         const totalElement = document.querySelector('.cart-summary strong');
-        const headerCartCount = document.getElementById('cart-item-count');
         const cartContent = document.querySelector('.cart-content');
-        const cartEmptyMessage = document.querySelector('.cart-empty');
+        const cartEmptyMessage = document.getElementById('cartEmptyMessage');
 
-        if(headerCartCount){
-            headerCartCount.textContent = cartState.itemCount > 0 ? cartState.itemCount : '';
+        if(window.updateCartIcon) {
+            window.updateCartIcon();
         }
 
-        if(cartState.itemCount === 0) {
+        if(cartState.totalItemCount === 0) {
             if(cartContent) cartContent.style.display = 'none';
             if(cartEmptyMessage) cartEmptyMessage.style.display = 'block';
             return;
@@ -85,11 +84,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if(cartTableBody) {
         cartTableBody.innerHTML = '';
 
-        cartState.items.forEach (item => {
+        cartState.cartItems.forEach (item => {
             const row = document.createElement('tr');
 
             const cellaImmagine = document.createElement('td');
-            cellaImmagine.dataset.labale = 'Immagine';
+            cellaImmagine.dataset.label = 'Immagine';
 
             const img = document.createElement('img');
             img.src = `uploads/products/${item.image ? item.image : 'default_image.png'}`;
@@ -100,13 +99,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
             const cellaNome = document.createElement('td');
-            nomeCella.dataset.label = 'Nome';
-            nomeCella.textContent = item.nome;
+            cellaNome.dataset.label = 'Prodotto';
+            cellaNome.textContent = item.name;
             row.appendChild(cellaNome);
 
             const cellaPrezzo = document.createElement('td');
             cellaPrezzo.dataset.label = 'Prezzo';
-            cellaPrezzo.textContent = `${parseFloat(item.prezzo).toFixed(2).replace('.', ',')} €`;
+            cellaPrezzo.textContent = `${parseFloat(item.price).toFixed(2).replace('.', ',')} €`;
             row.appendChild(cellaPrezzo);
 
             const cellaQuantita = document.createElement('td');
@@ -122,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const cellaTotale = document.createElement('td');
             cellaTotale.dataset.label = 'Subtotale';
-            cellaTotale.textContent = `${parseFloat(item.prezzo * item.quantity).toFixed(2).replace('.', ',')} €`;
+            cellaTotale.textContent = `${parseFloat(item.price * item.quantity).toFixed(2).replace('.', ',')} €`;
             row.appendChild(cellaTotale);
 
             const cellaRimuovi = document.createElement('td');
