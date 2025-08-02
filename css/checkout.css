@@ -130,3 +130,24 @@ body {
         grid-template-columns: 1fr; /* Su tablet e mobile, una sola colonna */
     }
 }
+
+/* STILI PER CHECKOUT A PIÙ PASSAGGI */
+
+.checkout-step {
+    display: none; 
+}
+
+.checkout-step.is-active {
+    display: block; 
+    animation: fadeInUp 0.5s ease-out; 
+}
+
+/* Stile per i campi affiancati (data scadenza e CVV) */
+.form-group-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-group-row .form-group {
+    flex: 1; 
+}
