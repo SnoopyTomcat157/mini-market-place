@@ -12,7 +12,7 @@ try {
     $pdo = $database->getConnection();
 
     if ($isUserLoggedIn) {
-        // se utente loggato recupero carrello dal database
+        // se utente loggato, recupero dal DB
         $sql = "SELECT p.id_prodotto, p.nome_prodotto, p.prezzo, p.nome_file_immagine, cu.quantita
                 FROM carrelli_utente cu
                 JOIN prodotti p ON cu.id_prodotto = p.id_prodotto
@@ -35,7 +35,7 @@ try {
         }
 
     } else {
-        // se utente ospite recupero carrello dalla sessione
+        // se utente ospite recupero carrello da sessione
         if (!empty($_SESSION['cart'])) {
             $productIds = array_keys($_SESSION['cart']);
             $placeholders = implode(',', array_fill(0, count($productIds), '?'));
@@ -73,13 +73,15 @@ require_once 'src/templates/header.php';
     <h1>Il Tuo Carrello</h1>
     <?php if ($errorMessage): ?>
         <p class="feedback-message error"><?php echo $errorMessage; ?></p>
-    <?php elseif(empty($cartItems)): ?>
-        <div class="cart-empty">
+    <?php else: ?>
+        <!-- Contenitore per il messaggio "carrello vuoto" -->
+        <div class="cart-empty" id="cartEmptyMessage" style="<?php if (!empty($cartItems)) echo 'display: none;'; ?>">
             <p>Il tuo carrello è vuoto.</p>
             <a href="index.php" class="button-primary">Continua lo shopping</a>
         </div>
-    <?php else: ?>
-        <div class="cart-content">
+
+        <!-- Contenitore del carrello pieno -->
+        <div class="cart-content" style="<?php if (empty($cartItems)) echo 'display: none;'; ?>">
             <table class="cart-table">
                 <thead>
                     <tr>
@@ -94,10 +96,7 @@ require_once 'src/templates/header.php';
                     <?php foreach($cartItems as $item): ?>
                         <tr>
                             <td data-label="Immagine">
-                                <?php
-                                    $image_name = isset($item['image']) && !empty($item['image']) ? $item['image'] : 'default_image.png';
-                                ?>
-                                <img src="uploads/products/<?php echo htmlspecialchars($image_name); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" class="cart-product-img">
+                                <img src="uploads/products/<?php echo htmlspecialchars($item['image'] ?? 'default_image.png'); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" class="cart-product-img">
                             </td>
                             <td data-label="Prodotto"><?php echo htmlspecialchars($item['name']); ?></td>
                             <td data-label="Prezzo"><?php echo number_format($item['price'], 2, ',', '.'); ?> €</td>
