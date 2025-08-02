@@ -5,10 +5,10 @@
 INSERT INTO `utenti` (`username`, `email`, `password_hash`, `ruolo`) VALUES
 ('admin', 'admin@example.com', '$2y$12$iP1YtXIzSD8ApYokUCYLG.y0EUQcneP0MkCF1iN69i5YAzlH2uTy.', 'admin');
 
--- password per MarioRossi e AnnaVerdi: password123
+-- password per MarioRossi e AnnaVerdi: Password1234
 INSERT INTO `utenti` (`username`, `email`, `password_hash`, `ruolo`) VALUES
-('MarioRossi', 'mario.rossi@example.com', '$2y$10$gL3gS.jN9G.jL4hK.jH5g.uR2i.jL4hK.jH5g.uR2i.jL4hK', 'venditore'),
-('AnnaVerdi', 'anna.verdi@example.com', '$2y$10$dK8k.jH5g.uR2i.jL4hK.jH5g.uR2i.jL4hK.jH5g.uR2i.jL', 'acquirente');
+('MarioRossi', 'mario.rossi@example.com', '$2y$12$JCE2ClSGNeSshMtzD2dFxuaX4Z0Fl9YRB2dHtUy17zdz0Ern8Sxbm', 'venditore'),
+('AnnaVerdi', 'anna.verdi@example.com', '$2y$12$JCE2ClSGNeSshMtzD2dFxuaX4Z0Fl9YRB2dHtUy17zdz0Ern8Sxbm', 'acquirente');
 
 -- -----------------------
 -- CATEGORIE DI ESEMPIO
