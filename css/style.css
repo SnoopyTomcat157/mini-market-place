@@ -183,6 +183,14 @@ a:hover {
     flex-shrink: 0;
 }
 
+/* Assicura che il dropdown del select rimanga visibile su tutti i dispositivi */
+.search-bar select option {
+    font-size: 0.9rem;
+    padding: 5px;
+    background-color: white;
+    color: var(--colore-secondario);
+}
+
 .search-bar input[type="text"] {
     flex-grow: 1;
 }
@@ -572,8 +580,8 @@ a:hover {
 /* RESPONSIVE DESIGN */
 
 @media (max-width: 992px) {
-    /* Nasconde la ricerca e la navigazione per fare spazio */
-    .search-container-header, .main-nav {
+    /* Nasconde la navigazione ma mantiene la ricerca */
+    .main-nav {
         display: none;
     }
 
@@ -582,9 +590,56 @@ a:hover {
         display: block;
     }
 
-    /* Adatta il layout dell'header per mobile */
+    /* Adatta il layout dell'header per mobile con ricerca */
     .main-header {
-        grid-template-columns: 1fr auto; /* Logo a sinistra, hamburger a destra */
+        grid-template-columns: auto 1fr auto; /* Logo, ricerca, hamburger */
+        padding: 0.3rem 1%;
+    }
+
+    /* Adatta il logo per tablet */
+    .main-header .logo img {
+        height: 185px;
+        width: 370px;
+        object-fit: contain;
+        transform: scale(1.0);
+    }
+
+    .main-header .logo img:hover {
+        transform: scale(1.02);
+    }
+
+    /* Barra di ricerca mobile ridotta */
+    .search-container-header {
+        max-width: 180px;
+        margin: 0 4px;
+    }
+
+    .search-bar {
+        position: relative; /* Per controllare il dropdown */
+    }
+
+    .search-bar select {
+        padding: 4px 5px;
+        font-size: 0.7rem;
+        min-width: 30px;
+        max-width: 55px; 
+    }
+
+    .search-bar input {
+        padding: 4px 5px;
+        font-size: 0.7rem;
+    }
+
+    .search-bar .search-button {
+        padding: 0 7px;
+        font-size: 0.7rem;
+    }
+
+    /* Migliora la visibilità del dropdown su mobile */
+    .search-bar select option {
+        font-size: 0.8rem;
+        padding: 8px;
+        min-height: 30px;
     }
 
     /* Stili per il menu a comparsa */
@@ -641,13 +696,88 @@ a:hover {
 }
 
 @media (max-width: 768px) {
-    /* Riduciamo ulteriormente la dimensione del logo su schermi molto piccoli */
+    /* Adatta il logo per schermi medi */
     .main-header .logo img {
-        height: 80px;
+        height: 155px;
+        width: 310px;
+        object-fit: contain;
+        transform: scale(1.0);
+    }
+
+    .main-header .logo img:hover {
+        transform: scale(1.01);
+    }
+
+    /* Riduce il padding dell'header per guadagnare spazio */
+    .main-header {
+        padding: 0.2rem 0.5%;
+    }
+
+    /* Barra di ricerca ancora più piccola */
+    .search-container-header {
+        max-width: 150px;
+        margin: 0 3px;
+    }
+
+    .search-bar select {
+        padding: 3px 4px;
+        font-size: 0.65rem;
+        min-width: 28px;
+        max-width: 48px; 
+    }
+
+    .search-bar input {
+        padding: 3px 4px;
+        font-size: 0.65rem;
+    }
+
+    .search-bar .search-button {
+        padding: 0 6px;
+        font-size: 0.65rem;
     }
 }
 
 @media (max-width: 576px) {
+    /* Adatta il logo per schermi piccoli */
+    .main-header .logo img {
+        height: 125px;
+        width: 250px;
+        object-fit: contain;
+        transform: scale(1.0);
+    }
+
+    .main-header .logo img:hover {
+        transform: scale(1.0);
+    }
+
+    /* Ottimizza il padding per schermi piccoli */
+    .main-header {
+        padding: 0.2rem 0.5%;
+    }
+
+    /* Barra di ricerca compatta */
+    .search-container-header {
+        max-width: 120px;
+        margin: 0 2px;
+    }
+
+    .search-bar select {
+        padding: 3px 3px;
+        font-size: 0.6rem;
+        min-width: 25px;
+        max-width: 40px; 
+    }
+
+    .search-bar input {
+        padding: 3px 3px;
+        font-size: 0.6rem;
+    }
+
+    .search-bar .search-button {
+        padding: 0 5px;
+        font-size: 0.6rem;
+    }
+
     .cart-table thead {
         display: none;
     }
@@ -680,3 +810,131 @@ a:hover {
         font-weight: bold;
     }
 }
+
+@media (max-width: 480px) {
+    /* Adatta il logo per schermi molto piccoli */
+    .main-header .logo img {
+        height: 115px;
+        width: 230px;
+        object-fit: contain;
+        transform: scale(1.0);
+    }
+
+    .main-header .logo img:hover {
+        transform: scale(1.0);
+    }
+
+    /* Ottimizza ulteriormente il padding */
+    .main-header {
+        padding: 0.2rem 1%;
+    }
+
+    /* Barra di ricerca ultra compatta */
+    .search-container-header {
+        max-width: 100px;
+        margin: 0 1px;
+    }
+
+    .search-bar select {
+        padding: 2px 2px;
+        font-size: 0.55rem;
+        min-width: 22px;
+        max-width: 35px; 
+    }
+
+    .search-bar input {
+        padding: 3px 3px;
+        font-size: 0.6rem;
+    }
+
+    .search-bar .search-button {
+        padding: 0 5px;
+        font-size: 0.6rem;
+    }
+}
+
+@media (max-width: 360px) {
+    /* Adatta il logo per schermi extra piccoli */
+    .main-header .logo img {
+        height: 105px;
+        width: 210px;
+        object-fit: contain;
+        transform: scale(1.0);
+    }
+
+    .main-header .logo img:hover {
+        transform: scale(1.0);
+    }
+
+    /* Padding minimo per schermi extra piccoli */
+    .main-header {
+        padding: 0.15rem 0.5%;
+    }
+
+    /* Barra di ricerca minima */
+    .search-container-header {
+        max-width: 85px;
+        margin: 0 1px;
+    }
+
+    .search-bar select {
+        padding: 2px 1px;
+        font-size: 0.5rem;
+        min-width: 20px;
+        max-width: 30px; 
+    }
+
+    .search-bar input {
+        padding: 2px 2px;
+        font-size: 0.55rem;
+    }
+
+    .search-bar .search-button {
+        padding: 0 4px;
+        font-size: 0.55rem;
+    }
+}
+
+@media (max-width: 320px) {
+    /* Adatta il logo per schermi estremamente piccoli */
+    .main-header .logo img {
+        height: 95px;
+        width: 190px;
+        object-fit: contain;
+        transform: scale(1.0);
+    }
+
+    .main-header .logo img:hover {
+        transform: scale(1.0);
+    }
+
+    /* Padding ultra minimo */
+    .main-header {
+        padding: 0.1rem 0.5%;
+    }
+
+    /* Barra di ricerca estrema compattezza */
+    .search-container-header {
+        max-width: 70px;
+        margin: 0 1px;
+    }
+
+    .search-bar select {
+        padding: 2px 1px;
+        font-size: 0.45rem;
+        min-width: 18px;
+        max-width: 28px; 
+    }
+
+    .search-bar input {
+        padding: 2px 1px;
+        font-size: 0.45rem;
+    }
+
+    .search-bar .search-button {
+        padding: 0 2px;
+        font-size: 0.45rem;
+    }
+}
+
+
