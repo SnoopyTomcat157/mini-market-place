@@ -1,0 +1,89 @@
+.reviews-container {
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 1px solid #eee;
+}
+
+.reviews-container h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2rem;
+}
+
+/* FORM PER SCRIVERE UNA RECENSIONE */
+
+.review-form-wrapper {
+    max-width: 700px;
+    margin: 0 auto 40px auto;
+    padding: 30px;
+    background-color: var(--colore-superficie);
+    border-radius: var(--bordo-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.review-form-wrapper h3 {
+    margin-bottom: 20px;
+}
+
+/* Stile per il form di modifica che viene creato dinamicamente */
+.edit-review-form {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px dashed #ccc;
+}
+
+.edit-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* LISTA DELLE RECENSIONI */
+
+.reviews-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.review-card {
+    background-color: var(--colore-superficie);
+    border: 1px solid #e0e0e0;
+    border-radius: var(--bordo-radius);
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.review-header strong {
+    font-size: 1.1rem;
+}
+
+.review-date {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.review-rating {
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: var(--colore-primario);
+}
+
+.review-body p {
+    line-height: 1.7;
+}
+
+.review-actions {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #f0f0f0;
+    display: flex;
+    gap: 10px;
+}
