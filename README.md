@@ -7,7 +7,7 @@ Backend: PHP (compatibile con versioni 5.5 / 5.6)
 
 Frontend: JavaScript moderno (ES6+), HTML5, CSS3
 
-Database: MySQL / MariaDB
+Database: MySQL
 
 Interazione Client-Server: API personalizzate gestite tramite chiamate AJAX (fetch)
 
@@ -32,7 +32,7 @@ Backend: PHP (compatible with versions 5.5 / 5.6)
 
 Frontend: Modern JavaScript (ES6+), HTML5, CSS3
 
-Database: MySQL / MariaDB
+Database: MySQL
 
 Client-Server Interaction: Custom APIs handled via AJAX (fetch) calls
 
