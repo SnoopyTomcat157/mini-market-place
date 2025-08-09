@@ -1,12 +1,12 @@
 <?php
-
+    session_start();
     require_once '../config/config.php';
     require_once '../src/core/Database.php';
     require_once '../src/core/functions.php';
 
     header('Content-Type: application/json');
 
-    if(!isset($_SERVER['user_id'])){
+    if(!isset($_SESSION['user_id'])){
         http_response_code(401);
         echo json_encode(['succes' => false, 'message' => 'Devi aver effettuato il login per eseguire questa azione']);
         exit();
@@ -14,7 +14,7 @@
 
     //se l'utente non ha almeno ruolo venditore non può aggiungere/togliere prodotti
 
-    if(!$_SESSION['user_role'] !== 'venditore' && $_SESSION['user_role'] !== 'admin'){
+    if(!isset($_SESSION['user_role']) || !$_SESSION['user_role'] !== 'venditore' && $_SESSION['user_role'] !== 'admin'){
         http_response_code(403);
         echo json_encode(['succes' => false, 'message' => 'Non hai i permessi per eseguire questa azione']);
         exit();
@@ -39,7 +39,7 @@
             $nome_prodotto = isset($_POST['nome_prodotto']) ? trim($_POST['nome_prodotto']) : '';
             $descrizione = isset($_POST['descrizione']) ? trim($_POST['descrizione']) : '';
             $prezzo = isset($_POST['prezzo']) ? filter_var($_POST['prezzo'], FILTER_VALIDATE_FLOAT) : 0.0;
-            $categoria_id = isset($_POST[$categoria_id]) ? (int)$_POST['categoria_id'] : 0;
+            $categoria_id = isset($_POST['categoria_id']) ? (int)$_POST['categoria_id'] : 0;
             $quantita = isset($_POST['quantita']) ? (int)$_POST['quantita'] : 0;
 
             if(empty($nome_prodotto || $prezzo <= 0 || $categoria_id <= 0)){
@@ -56,7 +56,6 @@
             if (optimizeImage($tempFilePath, $destinationPath)) {
                 $nome_file_immagine = $uniqueFilename;
             } else {
-                // Gestisci l'errore se l'ottimizzazione fallisce
                 error_log("Fallimento ottimizzazione immagine per il prodotto: " . $_POST['nome_prodotto']);
             }
 
