@@ -8,7 +8,7 @@
 
     if(!isset($_SESSION['user_id'])){
         http_response_code(401);
-        echo json_encode(['succes' => false, 'message' => 'Devi aver effettuato il login per eseguire questa azione']);
+        echo json_encode(['success' => false, 'message' => 'Devi aver effettuato il login per eseguire questa azione']);
         exit();
     }
 
@@ -16,13 +16,13 @@
 
     if(!isset($_SESSION['user_role']) || !$_SESSION['user_role'] !== 'venditore' && $_SESSION['user_role'] !== 'admin'){
         http_response_code(403);
-        echo json_encode(['succes' => false, 'message' => 'Non hai i permessi per eseguire questa azione']);
+        echo json_encode(['success' => false, 'message' => 'Non hai i permessi per eseguire questa azione']);
         exit();
     }
     
     if($_SERVER['REQUEST_METHOD'] !== 'POST'){
         http_response_code(405);
-        echo json_encode(['succes' => false, 'message' => 'Metodo non consentito']);
+        echo json_encode(['success' => false, 'message' => 'Metodo non consentito']);
         exit();
     }
 
@@ -88,7 +88,7 @@
             $fields = [];
             $params = [];
         
-            // Aggiungi i campi solo se sono stati inviati nel form
+            
             if (isset($_POST['nome_prodotto'])) { $fields[] = 'nome_prodotto = ?'; $params[] = trim($_POST['nome_prodotto']); }
             if (isset($_POST['descrizione'])) { $fields[] = 'descrizione_prodotto = ?'; $params[] = trim($_POST['descrizione']); }
             if (isset($_POST['prezzo'])) { $fields[] = 'prezzo = ?'; $params[] = filter_var($_POST['prezzo'], FILTER_VALIDATE_FLOAT); }
@@ -108,11 +108,11 @@
                 $destinationPath = $uploadDir . $uniqueFilename;
 
                 if (optimizeImage($tempFilePath, $destinationPath)) {
-                    // Se l'upload ha successo, aggiungi il campo all'aggiornamento
+                    
                     $fields[] = 'nome_file_immagine = ?'; 
                     $params[] = $uniqueFilename;
 
-                    // 3. Elimina la vecchia immagine, se esisteva
+                   
                     if ($oldImage && file_exists($uploadDir . $oldImage)) {
                         unlink($uploadDir . $oldImage);
                     }
