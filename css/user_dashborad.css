@@ -1,0 +1,99 @@
+/* STILI COMUNI DASHBOARD */
+
+.dashboard-container {
+    padding: 20px;
+    background-color: var(--colore-superficie);
+    border-radius: var(--bordo-radius);
+    box-shadow: var(--box-shadow);
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.dashboard-header h1 {
+    font-size: 2rem;
+}
+
+.dashboard-content h2 {
+    margin-bottom: 20px;
+}
+
+/* STORICO ORDINI (USER DASHBOARD) */
+
+.order-history {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.order-card {
+    border: 1px solid #ddd;
+    border-radius: var(--bordo-radius);
+    background-color: #fdfdfd;
+    overflow: hidden; /* Per contenere gli stili interni */
+}
+
+.order-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+    flex-wrap: wrap; /* Va a capo su schermi piccoli */
+    gap: 10px;
+}
+
+.order-card-header strong {
+    font-size: 1.1rem;
+}
+
+.order-card-header small {
+    color: #6c757d;
+    margin-left: 5px;
+}
+
+.order-card-header span {
+    background-color: #e9ecef;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.order-card-body {
+    padding: 20px;
+}
+
+.order-card-body h4 {
+    margin-bottom: 15px;
+}
+
+.order-card-body ul {
+    list-style: none;
+    padding: 0;
+}
+
+.order-card-body li {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.order-card-body li:last-child {
+    border-bottom: none;
+}
+
+.order-item-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+}
