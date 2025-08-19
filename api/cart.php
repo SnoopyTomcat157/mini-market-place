@@ -3,6 +3,11 @@ session_start();
 require_once '../config/config.php';
 require_once '../src/core/Database.php';
 
+/**
+ * Funzione helper per calcolare e restituire lo stato completo del carrello.
+ * @param PDO $pdo - L'oggetto della connessione al database.
+ * @return array - Un array con gli articoli, il prezzo totale e il numero totale di articoli.
+ */
 function getCartState($pdo) {
     $cartItems = [];
     $totalPrice = 0;
@@ -77,8 +82,7 @@ try {
 
     if ($requestMethod === 'GET' && isset($_GET['action']) && $_GET['action'] === 'get_count') {
         $cartState = getCartState($pdo);
-        echo json_encode(['success' => true, 'totalItemCount' => $cartState['totalItemCount']]);
-        exit();
+        rispostaJson(true, 'Conteggio carrello recuperato', ['totalItemCount' => $cartState['totalItemCount']]);
     }
 
     if ($requestMethod === 'POST') {
@@ -89,7 +93,7 @@ try {
         $message = '';
 
         if ($productId <= 0 && in_array($action, ['add', 'update', 'remove'])) {
-            throw new Exception('ID prodotto non valido.');
+            rispostaJson(false, 'ID prodotto non valido.', [], 400);
         }
 
         if ($isUserLoggedIn) {
@@ -121,7 +125,7 @@ try {
                     $message = 'Prodotto rimosso dal carrello.';
                     break;
                 default:
-                    throw new Exception('Azione non valida.');
+                    rispostaJson(false, 'Azione non valida.', [], 400);
             }
         } else {
             // Logica per utente ospite (sessione)
@@ -141,29 +145,20 @@ try {
                     $message = 'Prodotto rimosso dal carrello.';
                     break;
                 default:
-                    throw new Exception('Azione non valida.');
+                    rispostaJson(false, 'Azione non valida.', [], 400);
             }
         }
 
         // Dopo ogni azione, ricalcola lo stato completo del carrello
         $cartState = getCartState($pdo);
-        $response = [
-            'success' => true,
-            'message' => $message,
-            'cartState' => $cartState
-        ];
-        echo json_encode($response);
+        rispostaJson(true, $message, ['cartState' => $cartState]);
         exit();
     }
 
-    throw new Exception('Metodo o azione non supportati.');
+    rispostaJson(false, 'Metodo o azione non supportati.', [], 405);
 
 } catch (Exception $e) {
-    http_response_code(400);
-    $response = [
-        'success' => false,
-        'message' => $e->getMessage()
-    ];
-    echo json_encode($response);
+   error_log('Errore carrello: ' . $e->getMessage());
+   rispostaJson(false, 'Si è verificato un errore. Riprova più tardi.', [], 500);
 }
 ?>
