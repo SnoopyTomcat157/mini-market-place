@@ -2,20 +2,17 @@
 session_start();
 require_once '../config/config.php';
 require_once '../src/core/Database.php';
+require_once '../src/core/functions.php';
 
-header('Content-TYpe: application/json');
+header('Content-Type: application/json');
 
 if($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo json_encode(['success' => false, 'message' => 'Metodo non consentito.']);
-    exit();
+   rispostaJson(false, 'Metodo non consentito.', [], 405);
 }
 
 
 if(!isset($_SESSION['user_id'])){
-    http_response_code(401);
-    echo json_encode(['success' => false, 'message' => 'Devi essere loggato per completare l\'azione']);
-    exit();
+    rispostaJson(false, 'Devi essere loggato per completare l\'azione', [], 401);
 }
 
 // recupero dati spedizione
@@ -33,14 +30,11 @@ $expiry_date = isset($_POST['expiry_date']) ? trim($_POST['expiry_date']) : '';
 $cvv = isset($_POST['cvv']) ? trim($_POST['cvv']) : '';
 
 if(empty($nome) || empty($cognome) || empty($indirizzo) || empty($citta) || empty($cap)) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Tutti i campi di spedizione sono obbligatori.']);
-    exit();
+    rispostaJson(false, 'Tutti i campi di spedizione sono obbligatori.', [], 400);
 }
 
 if(empty($card_number) || empty($expiry_date) || empty($cvv)) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Tutti i campi di pagamento sono obbligatori.']);
+    rispostaJson(false, 'Tutti i campi di pagamento sono obbligatori.', [], 400);
     exit();
 }
 
@@ -96,13 +90,12 @@ try{
 
     $pdo->commit();
 
-    echo json_encode(['success' => true, 'message' => 'Ordine completato con successo.', 'orderId' => $orderId]);
+    rispostaJson(true, 'Ordine completato con successo.', ['orderId' => $orderId]);
 } catch(Exception $e){
     //annullo tutte le operazioni in caso di qualsiasi errore
     $pdo->rollBack();
-    http_response_code(500);
     error_log('Errore Checkout:' . $e->getMessage());
-    echo json_encode(['success' => false, 'message' => 'Si è verificato un errore durante il completamento dell\'ordine.']);
+    rispostaJson(false, 'Si è verificato un errore durante il completamento dell\'ordine.', [], 500);
 }
 
 ?>
