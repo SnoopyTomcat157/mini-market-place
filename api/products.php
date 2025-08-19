@@ -6,24 +6,10 @@
 
     header('Content-Type: application/json');
 
-    if(!isset($_SESSION['user_id'])){
-        http_response_code(401);
-        echo json_encode(['success' => false, 'message' => 'Devi aver effettuato il login per eseguire questa azione']);
-        exit();
-    }
-
     //se l'utente non ha almeno ruolo venditore non può aggiungere/togliere prodotti
-
-    if(!isset($_SESSION['user_role']) || !$_SESSION['user_role'] !== 'venditore' && $_SESSION['user_role'] !== 'admin'){
-        http_response_code(403);
-        echo json_encode(['success' => false, 'message' => 'Non hai i permessi per eseguire questa azione']);
-        exit();
-    }
-    
+    assicuraUtenteConRuolo(['admin', 'venditore']);
     if($_SERVER['REQUEST_METHOD'] !== 'POST'){
-        http_response_code(405);
-        echo json_encode(['success' => false, 'message' => 'Metodo non consentito']);
-        exit();
+        rispostaJson(false, 'Metodo non consentito', [], 405);
     }
 
 
@@ -43,9 +29,7 @@
             $quantita = isset($_POST['quantita']) ? (int)$_POST['quantita'] : 0;
 
             if(empty($nome_prodotto || $prezzo <= 0 || $categoria_id <= 0)){
-                http_response_code(400);
-                json_encode(['success' => false, 'message' => 'Nome prezzo e categoria sono obbligatori']);
-                exit();
+                rispostaJson(false, 'Nome, prezzo e categoria sono obbligatori.', [], 400);
             }
             $nome_file_immagine = null;
             if(isset($_FILES['immagine']) && $_FILES['immagine']['error'] == 0) {
@@ -67,12 +51,11 @@
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute([$_SESSION['user_id'], $categoria_id, $nome_prodotto, $descrizione, $prezzo, $quantita, $nome_file_immagine]);
 
-                echo json_encode(['success' => true, 'message' => 'Prodotto aggiunto con successo']);
+                rispostaJson(true, 'Prodotto aggiunto con successo.');
             }
             catch(PDOException $e){
-                http_response_code(500);
                 error_log('Errore durante l\'aggiunta del prodotto: ' . $e->getMessage());
-                echo json_encode(['success' => false, 'message' => 'Si è verificato un errore durante l\'aggiunta del prodotto. Riprova più tardi.']);
+                rispostaJson(false, 'Si è verificato un errore durante l\'aggiunta del prodotto. Riprova più tardi.', [], 500);
             }
             break;
 
@@ -80,9 +63,7 @@
             //aggiornamento prodotto
             $productId = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
             if($productId <= 0) {
-                http_response_code(400);
-                echo json_encode(['success' => false, 'message' => 'ID prodotto non valido']);
-                exit();
+                rispostaJson(false, 'ID prodotto non valido.', [], 400);
             }
 
             $fields = [];
@@ -120,8 +101,7 @@
             }
 
         if (empty($fields)) {
-            echo json_encode(['success' => true, 'message' => 'Nessun dato da aggiornare.']);
-            exit();
+            rispostaJson(true, 'Nessun dato da aggiornare.');
         }
 
         $sql = "UPDATE prodotti SET " . implode(', ', $fields) . " WHERE id_prodotto = ?";
@@ -138,15 +118,14 @@
             $stmt->execute($params);
             
             //controlla se la riga è stata effettivamente modificata
-            if ($stmt->rowCount() > 0) {
-                echo json_encode(['success' => true, 'message' => 'Prodotto aggiornato con successo!']);
+                if ($stmt->rowCount() > 0) {
+                    rispostaJson(true, 'Prodotto aggiornato con successo!');
             } else {
-                echo json_encode(['success' => false, 'message' => 'Nessuna modifica effettuata. Il prodotto potrebbe non esistere o non hai i permessi.']);
+                rispostaJson(false, 'Nessuna modifica effettuata. Il prodotto potrebbe non esistere o non hai i permessi.');
             }
         } catch (PDOException $e) {
-            http_response_code(500);
             error_log('Errore aggiornamento prodotto: ' . $e->getMessage());
-            echo json_encode(['success' => false, 'message' => 'Si è verificato un errore durante l\'aggiornamento.']);
+            rispostaJson(false, 'Si è verificato un errore durante l\'aggiornamento.', [], 500);
         }
         break;
 
@@ -154,9 +133,7 @@
             // eliminazione prodotto
             $productId = isset($_POST['product_id']) ? (int)$_POST['product_id'] : 0;
             if ($productId <= 0) {
-                http_response_code(400);
-                echo json_encode(['success' => false, 'message' => 'ID prodotto non valido.']);
-                exit();
+                rispostaJson(false, 'ID prodotto non valido.', [], 400);
             }
 
             try {
@@ -186,20 +163,18 @@
                             unlink($filePath); // Funzione PHP per eliminare un file
                         }
                     }
-                    echo json_encode(['success' => true, 'message' => 'Prodotto eliminato con successo!']);
+                    rispostaJson(true, 'Prodotto eliminato con successo!');
                 } else {
-                    echo json_encode(['success' => false, 'message' => 'Impossibile eliminare il prodotto. Potrebbe non esistere o non hai i permessi.']);
+                    rispostaJson(false, 'Impossibile eliminare il prodotto. Potrebbe non esistere o non hai i permessi.');
                 }
             } catch (PDOException $e) {
-                http_response_code(500);
+                rispostaJson(false, 'Si è verificato un errore durante l\'eliminazione.', [], 500);
                 error_log('Errore eliminazione prodotto: ' . $e->getMessage());
-                echo json_encode(['success' => false, 'message' => 'Si è verificato un errore durante l\'eliminazione.']);
             }
             break;
 
         default:
-            http_response_code(400);
-            echo json_encode(['success' => false, 'message' => 'Azione non valida.']);
+            rispostaJson(false, 'Azione non valida.', [], 400);
             break;
     }
 
