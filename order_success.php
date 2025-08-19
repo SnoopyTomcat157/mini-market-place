@@ -1,12 +1,10 @@
 <?php
 session_start();
+require_once 'src/core/functions.php';
+
+assicuraUtenteAutenticato();
+
 require_once 'src/core/Database.php';
-
-
-if(!isset($_SESSION['user_id'])){
-    header(('Location: login.php'));
-    exit();
-}
 
 $order_id = isset($_GET['order_id']) ? $_GET['order_id'] : 0;
 

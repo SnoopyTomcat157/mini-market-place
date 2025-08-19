@@ -1,16 +1,10 @@
 <?php
 session_start();
+require_once 'src/core/functions.php';
+
+assicuraUtenteConRuolo(['venditore', 'admin']);
+
 require_once 'src/core/Database.php';
-
-if(!isset($_SESSION['user_id'])){
-    header('Location: login.php');
-    exit();
-}
-
-if($_SESSION['user_role'] !== 'venditore' && $_SESSION['user_role'] !== 'admin') {
-    header('Location: error_403_page.php');
-    exit();
-}
 
 $product_id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $product = null;
