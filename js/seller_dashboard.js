@@ -1,5 +1,3 @@
-// a differenza degli altri file qui ho usato async/await per sperimentare
-
 document.addEventListener('DOMContentLoaded', () => {
     const productTable = document.querySelector('.product-table');
 
