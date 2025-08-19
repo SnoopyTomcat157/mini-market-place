@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once 'src/core/functions.php';
+
 assicuraUtenteAutenticato();
 
 require_once 'src/core/Database.php';
