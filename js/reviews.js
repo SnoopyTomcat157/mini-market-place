@@ -3,42 +3,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const reviewsContainer = document.querySelector('.reviews-container');
 
     if(reviewForm){
-        reviewForm.addEventListener('submit', async (event) => {
-            event.preventDefault();
-
-            const submitButton = reviewForm.querySelector('button[type="submit"]');
-            const feedBackDiv = document.getElementById('reviewFeedback');
-
-            submitButton.disabled = true;
-            feedBackDiv.textContent = 'Invio in corso...';
-            feedBackDiv.className = 'feedback-message';
-
-            const formData = new FormData();
-            //aggiunta recensione
-            formData.append('action', 'create');
-
-            try {
-                const response = await fetch('api/reviews.php', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const result = await response.json();
-
-                if(!response.ok) {
-                    throw new Error(result.message);
-
-                }
-                feedBackDiv.textContent = result.message;
-                feedBackDiv.className = 'feedback-message success';
-                addNewReview(formData);
-                reviewForm.reset();
-            } catch (error) {
-                feedBackDiv.textContent = error.message;
-                feedBackDiv.className = 'feedback-message error';
-            } finally {
-                submitButton.disabled = false;
-            }
+        reviewForm.addEventListener('submit', (event) => {
+            handleFormSubmit(event, 'api/reviews.php', 'create', (result) => {
+                showFeedback(result.message, 'success', 'reviewFeedback');
+                addNewReview(new FormData(reviewForm));
+            });
         });
     }
 
