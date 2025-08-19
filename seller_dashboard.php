@@ -1,17 +1,11 @@
 <?php 
     session_start();
-    require_once 'src/core/Database.php';
-
+    require_once 'src/core/functions.php';
+    
     //controllo di sicurezza
-    if(!isset($_SESSION['user_id'])) {
-        header('Location: login.php');
-        exit();
-    }
-
-    if($_SESSION['user_role'] !== 'venditore') {
-        header('Location: error_403_page.php');
-        exit();
-    }
+    assicuraUtenteConRuolo(['venditore']);
+    
+    require_once 'src/core/Database.php';
 
     //recuoero tutti i prodotti del venditore
     $seller_product = [];

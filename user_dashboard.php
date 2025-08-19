@@ -1,11 +1,10 @@
 <?php
 session_start();
-require_once 'src/core/Database.php';
+require_once 'src/core/functions.php';
 
-if(!isset($_SESSION['user_id'])) {
-    header('Location: /login.php');
-    exit();
-}
+assicuraUtenteAutenticato();
+
+require_once 'src/core/Database.php';
 
 $userOrders = [];
 $errorMessage = null;
