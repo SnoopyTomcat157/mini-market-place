@@ -47,29 +47,22 @@ if ($action === 'register') {
 
     //altri controlli username
     if (!preg_match('/^[a-zA-Z0-9_]+$/', $user)) {
-        http_response_code(400);
-        echo json_encode(['success' => false, 'message' => 'L\'username può contenere solo lettere, numeri e underscore (_).']);
-        exit();
+        rispostaJson(false, 'Username può contenere solo lettere, numeri e underscore.', [], 400);
     }
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        http_response_code(400);
-        echo json_encode(['success' => false, 'message' => 'Formato email non valido.']);
+        rispostaJson(false, 'Formato email non valido.', [], 400);
         exit();
     }
 
     //correttezza password
     if(strlen($pw) < 8 ){
-        http_response_code(400);
-        echo json_encode(['success' => false, 'message' => 'La password deve avere almeno 8 caratteri.']);
-        exit();
+        rispostaJson(false, 'La password deve avere almeno 8 caratteri.', [], 400);
     }
 
     //controllo caratteri password
     if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/', $pw)) {
-        http_response_code(400);
-        echo json_encode(['success' => false, 'message' => 'La password deve contenere almeno una lettera maiuscola, una minuscola, un numero e un carattere speciale.']);
-        exit();
+        rispostaJson(false, 'La password deve contenere almeno una lettera maiuscola, una minuscola, un numero e un carattere speciale.', [], 400);
     }
 
 
@@ -87,16 +80,14 @@ if ($action === 'register') {
         $stmt->execute([$user, $email, $hashpw]);
 
         //se arrivo qui tutto ok;
-        echo json_encode(['success' => true, 'message' => 'Registrazione avvenuta con successo']);
+        rispostaJson(true, 'Registrazione avvenuta con successo');
     } catch (PDOException $e) {
     if ($e->getCode() == 23000) { // Codice SQL standard per violazione di vincolo di unicità
-            http_response_code(409);
-            echo json_encode(['success' => false, 'message' => 'Username o email già esistenti.']);
+            rispostaJson(false, 'Username o email già in uso.', [], 409);
         } else {
             // Per tutti gli altri errori del database
-            http_response_code(500);
             error_log('Errore di registrazione: ' . $e->getMessage());
-            echo json_encode(['success' => false, 'message' => 'Si è verificato un errore durante la registrazione. Riprova più tardi.']);
+           rispostaJson(false, 'Si è verificato un errore durante la registrazione. Riprova più tardi.', [], 500);
         }
     }
 } elseif ($action === 'login') {
@@ -105,9 +96,7 @@ if ($action === 'register') {
     $pw = isset($_POST['password']) ? trim($_POST['password']) : '';
 
     if (empty($email) || empty($pw)) {
-        http_response_code(400);
-        echo json_encode(['success' => false, 'message' => 'Email e password sono obbligatori.']);
-        exit();
+        rispostaJson(false, 'Email e password sono obbligatori.', [], 400);
     }
 
     try {
@@ -120,9 +109,7 @@ if ($action === 'register') {
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$user || !password_verify($pw, $user['password_hash'])) {
-            http_response_code(401);
-            echo json_encode(['success' => false, 'message' => 'Email o password errati.']);
-            exit();
+            rispostaJson(false, 'Email o password errati.', [], 401);
         }
 
         // Login avvenuto con successo
@@ -130,7 +117,11 @@ if ($action === 'register') {
         $_SESSION['user_id'] = $user['id_utente'];
         $_SESSION['username'] = $user['username'];
         $_SESSION['user_role'] = $user['ruolo'];
-        echo json_encode(['success' => true, 'message' => 'Login avvenuto con successo.', 'role' => $user['ruolo']]);
+        rispostaJson(true, 'Login effettuato con successo.', [
+            'user_id' => $user['id_utente'],
+            'username' => $user['username'],
+            'user_role' => $user['ruolo']
+        ]);
 
         //unione del carrello con la sessione
         if(isset($_SESSION['cart']) && !empty($_SESSION['cart'])){
@@ -161,9 +152,10 @@ if ($action === 'register') {
         }
 
     } catch (PDOException $e) {
-        http_response_code(500);
         error_log('Errore di login: ' . $e->getMessage());
-        echo json_encode(['success' => false, 'message' => 'Si è verificato un errore durante il login. Riprova più tardi.']);
-    }
+        rispostaJson(false, 'Si è verificato un errore durante il login. Riprova più tardi.', [], 500);
+    } 
+} else {
+    rispostaJson(false, 'Azione non valida.', [], 400);
 }
 ?>

@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             //arrivato qui tutti i controlli sono passati
             
-            handleFormSubmit(event, 'api/auth.php', 'create', (result) => {
+            handleFormSubmit(event, 'api/auth.php', 'register', (result) => {
                 showSuccess(result.message);
                 registerForm.reset();
                 setTimeout(() => {

@@ -29,7 +29,7 @@ async function apiCall(endpoint, formData) {
  *
  * @param {Event} event - L'evento 'submit' del form.
  * @param {string} endpoint - L'URL dell'API a cui inviare i dati.
- * @param {string} action - L'azione specifica da inviare (es. 'login', 'create').
+ * @param {string} action - L'azione specifica da inviare (es. 'login', 'register').
  * @param {function} onSuccessCallback - La funzione da eseguire in caso di successo. Riceve i dati dalla risposta.
  */
 async function handleFormSubmit(event, endpoint, action, onSuccessCallback) {
@@ -62,17 +62,8 @@ async function handleFormSubmit(event, endpoint, action, onSuccessCallback) {
     formData.append('action', action);
 
     try {
-        const response = await fetch(endpoint, {
-            method: 'POST',
-            body: formData
-        });
+        const result = await apiCall(endpoint, formData);
 
-        const result = await response.json();
-
-        if (!response.ok) {
-            throw new Error(result.message || 'Si è verificato un errore.');
-        }
-        
         // Se la chiamata ha successo, memorizzo il risultato
         fetchResult = { success: true, data: result };
 
