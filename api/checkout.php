@@ -15,6 +15,11 @@ if(!isset($_SESSION['user_id'])){
     rispostaJson(false, 'Devi essere loggato per completare l\'azione', [], 401);
 }
 
+$action = isset($_POST['action']) ? $_POST['action'] : '';
+if($action === 'place_order'){
+    rispostaJson(false, 'Azione non valida.', [], 400);
+}
+
 // recupero dati spedizione
 
 $nome = isset($_POST['nome']) ? trim($_POST['nome']) : '';
