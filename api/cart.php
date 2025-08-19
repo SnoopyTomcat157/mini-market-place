@@ -2,6 +2,7 @@
 session_start();
 require_once '../config/config.php';
 require_once '../src/core/Database.php';
+require_once '../src/core/functions.php';
 
 /**
  * Funzione helper per calcolare e restituire lo stato completo del carrello.
