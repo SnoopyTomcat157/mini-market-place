@@ -1,13 +1,10 @@
 <?php
 session_start();
+require_once 'src/core/functions.php';
+
+assicuraUtenteConRuolo(['admin']);
+
 require_once 'src/core/Database.php';
-
-
-if (!isset($_SESSION['user_id']) || $_SESSION['user_role'] !== 'admin') {
-    header('Location: error_403.php'); 
-    exit();
-}
-
 
 $products = [];
 $errorMessage = null;
