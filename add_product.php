@@ -1,18 +1,14 @@
 <?php
     session_start();
     require_once 'src/core/Database.php';
+    require_once 'src/core/functions.php';
 
     //controllo utente
-    if (!isset($_SESSION['user_id'])) {
-        header('Location: login.php');
-        exit();
-    }
+    assicuraUtenteAutenticato();
+
 
     //utente deve essere o venditore o admin
-    if ($_SESSION["user_role"] !== "venditore" && $_SESSION["user_role"] !== "admin") {
-        header('Location: erro_403.php');
-        exit();
-    }
+    assicuraUtenteConRuolo(['venditore', 'admin']);
 
     $categories = [];
     $errorMessage = null;
