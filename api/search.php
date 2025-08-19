@@ -1,8 +1,13 @@
 <?php
 require_once '../config/config.php';
 require_once '../src/core/Database.php';
+require_once '../src/core/functions.php';
 
 header('Content-Type: application/json');
+
+if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+    rispostaJson(false, 'Metodo non consentito.', [], 405);
+}
 
 // Recupero i parametri di ricerca dall'URL
 $query_param = isset($_GET['query']) ? trim($_GET['query']) : '';
@@ -38,13 +43,11 @@ try {
     
     $products_found = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+    rispostaJson(true, 'Prodotti trovati', ['products' => $products_found]);
+
 } catch (Exception $e) {
     // In caso di errore, lo loggo e restituisco un errore JSON
-    http_response_code(500); // Internal Server Error
     error_log('Errore di ricerca: ' . $e->getMessage());
-    $products_found = ['error' => 'Si è verificato un errore durante la ricerca.'];
+    rispostaJson(false, 'Si è verificato un errore. Riprova più tardi.', [], 500);
 }
-
-// Restituisco il risultato (un array di prodotti o un errore) come JSON
-echo json_encode($products_found);
 ?>
