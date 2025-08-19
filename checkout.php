@@ -138,6 +138,7 @@ require_once 'src/templates/header.php';
     <?php endif; ?>
 </section>
 
+<script src="js/utils.js"></script>
 <script src="js/checkout.js"></script>
 <?php
 require_once 'src/templates/footer.php';

@@ -83,6 +83,7 @@
     <div id="feedbackMessage" class="feedback-message"></div>
 </section>
 
+<script src="js/utils.js"></script>
 <script src="js/add_product.js"></script>
 
 <?php

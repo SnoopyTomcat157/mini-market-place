@@ -72,6 +72,8 @@ require_once 'src/templates/header.php';
     </div>
 </section>
 
+
+<script src="js/utils.js"></script>
 <script src="js/auth.js"></script>
 
 <?php

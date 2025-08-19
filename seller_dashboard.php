@@ -80,6 +80,7 @@
         </div>
     </div>
 
+    <script src="js/utils.js"></script>
     <script src="js/seller_dashboard.js"></script>
 
     <?php

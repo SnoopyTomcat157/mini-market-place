@@ -124,6 +124,7 @@ require_once 'src/templates/header.php';
     <?php endif; ?>
 </section>
 
+<script src="js/utils.js"></script>
 <script src="js/cart_page_actions.js"></script>
 
 <?php

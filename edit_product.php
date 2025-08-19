@@ -101,6 +101,7 @@ require_once 'src/templates/header.php';
     <?php endif; ?>
 </section>
 
+<script src="js/utils.js"></script>
 <script src="js/product_form.js"></script>
 
 <?php
