@@ -21,16 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
             formData.append('quantity', quantity);
 
             try {
-                const response = await fetch('api/cart.php', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const result = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(result.message || 'Si è verificato un errore.');
-                }
+                await apiCall('api/cart.php', formData);
 
                 addToCartBtn.classList.add('is-added');
                 if (buttonText) buttonText.textContent = 'Aggiunto al carrello!';
@@ -50,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('Errore:', error);
                 if (buttonText) buttonText.textContent = 'Riprova';
                 addToCartBtn.disabled = false;
+                showFeedback(error.message, 'error');
             }
         });
     }
