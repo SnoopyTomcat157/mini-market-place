@@ -19,13 +19,12 @@ if(isset($_GET['action']) && $_GET['action'] === 'logout') {
 
 require_once '../config/config.php';
 require_once '../src/core/Database.php';
+require_once '../src/core/functions.php';
 
 header('Content-Type: application/json');
 
 if($_SERVER['REQUEST_METHOD'] !== 'POST'){
-    http_response_code(405);
-    echo json_encode(['success' => false, 'message' => 'Metodo non consentito']);
-    exit();
+    rispostaJson(false, 'Metodo non consentito.', [], 405);
 }
 
 $action = isset($_POST['action']) ? trim($_POST['action']) : '';
@@ -37,17 +36,13 @@ if ($action === 'register') {
     $email = isset($_POST['email']) ? trim($_POST['email']) : '';
 
     if (empty($user) || empty($email) || empty($pw)) {
-        http_response_code(400); // Bad Request
-        echo json_encode(['success' => false, 'message' => 'Tutti i campi sono obbligatori.']);
-        exit();
+        rispostaJson(false, 'Tutti i campi sono obbligatori.', [], 400);
     }
 
 
     //controllo lunghezza username
     if(strlen($user) < 3 || strlen($user) > 20){
-        http_response_code(400);
-        echo json_encode(['success' => false, 'message' => 'Username deve avere dai 3 ai 20 caratteri.']);
-        exit();
+        rispostaJson(false, 'Username deve avere dai 3 ai 20 caratteri.', [], 400);
     }
 
     //altri controlli username
