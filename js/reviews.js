@@ -12,22 +12,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     //modifica/elimina recensione
-    if(reviewsContainer){
-        reviewsContainer.addEventListener('click', async (event) => {
+    if (reviewsContainer) {
+        reviewsContainer.addEventListener('click', (event) => {
             const target = event.target;
-            //eliminazione
-            if(target.classList.contains('btn-delete-review')){
-                const reviewId = target.dataset.reviewId;
-                const reviewCard = target.closest('.review-card');
-                if(confirm('Sei sicuro di voler eliminare questa recensione?')) {
-                    await ReviewActions('delete', {review_id: reviewId});
-                }
+            if (target.matches('.btn-delete-review')) {
+                handleDeleteReview(target);
             }
-            if(target.classList.contains('btn-edit-review')){
-                const reviewCard = target.closest('.review-card');
-                showEditForm(reviewCard);
+            if (target.matches('.btn-edit-review')) {
+                showEditForm(target.closest('.review-card'));
             }
         });
+    }
+
+    async function handleDeleteReview(button) {
+        const reviewId = button.dataset.reviewId;
+        const reviewCard = button.closest('.review-card');
+        if (confirm('Sei sicuro di voler eliminare questa recensione?')) {
+            const formData = new FormData();
+            formData.append('action', 'delete');
+            formData.append('review_id', reviewId);
+            try {
+                const result = await apiCall('api/reviews.php', formData);
+                if (reviewCard) reviewCard.remove();
+                alert(result.message);
+            } catch (error) {
+                alert('Errore: ' + error.message);
+            }
+        }
     }
 
     function showEditForm(reviewCard) {
