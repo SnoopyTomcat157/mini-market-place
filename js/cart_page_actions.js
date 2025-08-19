@@ -37,17 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         formData.append('quantity', quantity);
 
         try{
-            const response = await fetch('api/cart.php', {
-                method: 'POST',
-                body: formData
-            });
-
-            const result = await response.json();
-
-            if(!response.ok) {
-                throw new Error(result.message || 'Errore del server');
-            }
-
+            const result = await apiCall('api/cart.php', formData);
             updateCartView(result.cartState);
         } catch (error) {
             console.error('Errore durante l\'aggiornamento del carrello: ', error);
