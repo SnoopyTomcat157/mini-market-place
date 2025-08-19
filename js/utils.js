@@ -1,4 +1,26 @@
-// js/utils.js
+/**
+ * Funzione di basso livello per effettuare chiamate API al nostro backend.
+ * @param {string} endpoint - L'URL dell'API da chiamare.
+ * @param {FormData} formData - I dati da inviare.
+ * @returns {Promise<object>} - Una Promise che si risolve con i dati JSON della risposta.
+ */
+async function apiCall(endpoint, formData) {
+    try {
+        const response = await fetch(endpoint, {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await response.json();
+        if (!response.ok) {
+            throw new Error(result.message || 'Si è verificato un errore sconosciuto.');
+        }
+        return result;
+    } catch (error) {
+        console.error(`Errore nella chiamata API a ${endpoint}:`, error);
+        throw error; // Rilancia l'errore per gestirlo nel file specifico
+    }
+}
 
 /**
  * Funzione generica per gestire l'invio di un form tramite AJAX.
@@ -25,16 +47,7 @@ async function handleFormSubmit(event, endpoint, action, onSuccessCallback) {
     formData.append('action', action);
 
     try {
-        const response = await fetch(endpoint, {
-            method: 'POST',
-            body: formData
-        });
-
-        const result = await response.json();
-
-        if (!response.ok) {
-            throw new Error(result.message || 'Si è verificato un errore.');
-        }
+        const result = await apiCall(endpoint, formData);
         
         // Se la chiamata ha successo, eseguo la funzione personalizzata
         if (onSuccessCallback) {
