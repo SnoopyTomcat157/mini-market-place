@@ -28,13 +28,14 @@
             $categoria_id = isset($_POST['categoria_id']) ? (int)$_POST['categoria_id'] : 0;
             $quantita = isset($_POST['quantita']) ? (int)$_POST['quantita'] : 0;
 
-            if(empty($nome_prodotto || $prezzo <= 0 || $categoria_id <= 0)){
+            if(empty($nome_prodotto) || $prezzo <= 0 || $categoria_id <= 0){
                 rispostaJson(false, 'Nome, prezzo e categoria sono obbligatori.', [], 400);
             }
             $nome_file_immagine = null;
             if(isset($_FILES['immagine']) && $_FILES['immagine']['error'] == 0) {
                $tempFilePath = $_FILES['immagine']['tmp_name'];
-                $uniqueFilename = uniqid('prod_', true) . '.jpg'; // Salviamo sempre come JPG ottimizzato
+               $fileExtension = strtolower(pathinfo($_FILES['immagine']['name'], PATHINFO_EXTENSION));
+                $uniqueFilename = uniqid('prod_', true) . '.' . $fileExtension;
                 $destinationPath = $uploadDir . $uniqueFilename;
 
             if (optimizeImage($tempFilePath, $destinationPath)) {
