@@ -1,4 +1,49 @@
 <?php
+
+/**
+ * Invia una risposta standard in formato JSON e termina lo script.
+ * @param bool $successo - Lo stato della richiesta (true o false).
+ * @param string $messaggio - Un messaggio per il frontend.
+ * @param array $dati - Dati aggiuntivi da inviare.
+ * @param int $codiceHttp - Il codice di stato HTTP da inviare.
+ */
+function rispostaJson($successo, $messaggio, $dati = [], $codiceHttp = 200) {
+    header('Content-Type: application/json');
+    http_response_code($codiceHttp);
+    echo json_encode([
+        'success' => $successo,
+        'message' => $messaggio,
+        'data' => $dati
+    ]);
+    exit();
+}
+
+/**
+ * Controlla se l'utente è loggato. Se non lo è, lo reindirizza al login.
+ * Da usare all'inizio delle pagine protette.
+ */
+function assicuraUtenteAutenticato() {
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    if (!isset($_SESSION['user_id'])) {
+        header('Location: login.php');
+        exit();
+    }
+}
+
+/**
+ * Controlla se l'utente ha uno dei ruoli permessi. Se non li ha, lo reindirizza.
+ * @param array $ruoliPermessi - Un array di ruoli permessi (es. ['admin', 'venditore']).
+ */
+function assicuraUtenteConRuolo($ruoliPermessi) {
+    assicuraUtenteAutenticato(); // Prima di tutto, deve essere loggato
+    if (!in_array($_SESSION['user_role'], $ruoliPermessi)) {
+        header('Location: error_403.php'); // Pagina di Accesso Negato
+        exit();
+    }
+}
+
 //file per l'ottimizzazione delle immagini
 
 function optimizeImage($sourcePath, $destinationPath, $maxwidth = 800, $jpegQuality = 500, $pngCompression = 6){
