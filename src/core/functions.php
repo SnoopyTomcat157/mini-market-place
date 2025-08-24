@@ -39,12 +39,12 @@ function assicuraUtenteAutenticato() {
 function assicuraUtenteConRuolo($ruoliPermessi) {
     assicuraUtenteAutenticato(); // Prima di tutto, deve essere loggato
     if (!in_array($_SESSION['user_role'], $ruoliPermessi)) {
-        header('Location: error_403.php'); // Pagina di Accesso Negato
+        header('Location: 403.php'); // Pagina di Accesso Negato
         exit();
     }
 }
 
-//file per l'ottimizzazione delle immagini
+//funzione per l'ottimizzazione delle immagini
 
 function optimizeImage($sourcePath, $destinationPath, $maxwidth = 800, $jpegQuality = 500, $pngCompression = 6){
     $imageInfo = getimagesize($sourcePath);
