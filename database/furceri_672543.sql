@@ -8,6 +8,10 @@ CREATE TABLE utenti (
     username VARCHAR(50) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
+    indirizzo VARCHAR(255) NULL,
+    citta VARCHAR(100) NULL,
+    cap VARCHAR(10) NULL,
+    provincia VARCHAR(50) NULL,
     ruolo ENUM('acquirente', 'venditore', 'admin') NOT NULL DEFAULT 'acquirente',
     data_registrazione TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
