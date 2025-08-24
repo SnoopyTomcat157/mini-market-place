@@ -23,7 +23,7 @@ if ($pdo) {
 }
 
 $currentPage = basename($_SERVER['SCRIPT_NAME']);
-$pages = ['login.php', 'register.php', 'checkout.php'];
+$pages = ['login.php', 'register.php', 'checkout.php', '404.php', '403.php'];
 $isPages = in_array($currentPage, $pages);
 ?>
 <!DOCTYPE html>
@@ -41,7 +41,7 @@ $isPages = in_array($currentPage, $pages);
 <header class="main-header <?php if ($isPages) echo 'header-simple'; ?>">
     <a href="index.php" class="logo"><img src="images/SVG/logo1.svg" alt="MiniMarketplace"></a>
     <?php
-        // Mostra la barra di ricerca e la navbar solo se non siamo nelle pagine di login o registrazione
+        // Mostra la barra di ricerca e la navbar solo se non ci troviamo nelle pagine dentro $pages
         if(!$isPages) :
     ?>
     <div class="search-container-header">
