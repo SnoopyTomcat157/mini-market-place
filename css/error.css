@@ -1,0 +1,32 @@
+.error-container {
+    text-align: center;
+    padding: 80px 20px;
+    margin: 50px auto;
+    max-width: 700px;
+}
+
+.error-code {
+    font-size: 10rem;
+    font-weight: bold;
+    color: var(--colore-primario);
+    line-height: 1;
+    margin-bottom: 20px;
+    text-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+}
+
+.error-container h1 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: var(--colore-secondario);
+}
+
+.error-container p {
+    font-size: 1.2rem;
+    color: #6c757d;
+    margin-bottom: 30px;
+}
+
+.error-container .button-primary {
+    padding: 12px 25px;
+    font-size: 1.1rem;
+}
