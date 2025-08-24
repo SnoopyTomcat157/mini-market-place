@@ -13,7 +13,7 @@ try{
     $database = new Database();
     $pdo = $database->getConnection();
 
-    $sql = "SELECT username, email, nome, cognome, indirizzo, citta, cap, provincia
+    $sql = "SELECT username, email, indirizzo, citta, cap, provincia
             FROM utenti
             WHERE id_utente = ?";
 
