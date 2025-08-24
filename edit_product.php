@@ -29,7 +29,7 @@ try{
     $product = $stmt_product->fetch(PDO::FETCH_ASSOC);
 
     if(!$product || ($product['id_utente_venditore'] !== $_SESSION['user_id'] && $_SESSION['user_role'] !== 'admin')) {
-        header('Location: error_403.php');
+        header('Location: 403.php');
         exit();
     }
 
