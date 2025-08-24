@@ -84,6 +84,11 @@ $isPages = in_array($currentPage, $pages);
                     <li><a href="edit_profile.php">Modifica Profilo</a></li>
                 </ul>
             </li>
+
+            <!-- link per diventare venditore -->
+             <?php if(isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'acquirente'): ?>
+                <li><a href="become_seller.php">Diventa Venditore</a></li>
+            <?php endif; ?>
             
             <!-- menu a tendina specifico per i venditori -->
             <?php if ($_SESSION['user_role'] === 'venditore'): ?>
