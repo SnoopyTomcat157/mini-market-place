@@ -31,6 +31,7 @@
             if(empty($nome_prodotto) || $prezzo <= 0 || $categoria_id <= 0){
                 rispostaJson(false, 'Nome, prezzo e categoria sono obbligatori.', [], 400);
             }
+            //ottimizzazione immagine
             $nome_file_immagine = null;
             if(isset($_FILES['immagine']) && $_FILES['immagine']['error'] == 0) {
                $tempFilePath = $_FILES['immagine']['tmp_name'];
